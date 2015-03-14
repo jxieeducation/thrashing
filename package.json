@@ -1,0 +1,12 @@
+{
+  "name": "thrashing",
+  "description": "tutorial making app",
+  "author": "jxieeducation@berkeley.edu",
+  "dependencies": {
+    "mongoose": "*",
+    "body-parser": "*",
+    "express": "*",
+    "jade": "*"
+  },
+  "engine": "node 0.4.1"
+}
