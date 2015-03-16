@@ -6,7 +6,8 @@
     "mongoose": "*",
     "body-parser": "*",
     "express": "*",
-    "jade": "*"
+    "jade": "*",
+    "passport": "*"
   },
   "engine": "node 0.4.1"
 }
