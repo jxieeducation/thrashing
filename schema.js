@@ -11,8 +11,15 @@ var tutorialSchema = mongoose.Schema({
 	description: String,
 	content: String
 })
-
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
+
+var userSchema = mongoose.Schema({
+	name: String,
+	email: String,
+	password: String
+})
+
+var User = mongoose.model('User', userSchema);
 
 function clean(){
 	Tutorial.remove(function (err) {
@@ -20,11 +27,15 @@ function clean(){
       		console.log(err);
     	}
   	});
-
+  	User.remove(function (err) {
+    	if (err) {
+      		console.log(err);
+    	}
+  	});
 }
 
 // clean();
-
 module.exports = {
 	Tutorial: Tutorial,
+	User: User,
 };

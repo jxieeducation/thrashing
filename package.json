@@ -7,7 +7,9 @@
     "body-parser": "*",
     "express": "*",
     "jade": "*",
-    "passport": "*"
+    "passport": "*",
+    "passport-local": "*",
+    "express-session": "*"
   },
   "engine": "node 0.4.1"
 }
