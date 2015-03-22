@@ -1,5 +1,5 @@
 var ObjectId = require('mongoose').Types.ObjectId;
-var schema = require('./schema.js');
+var schema = require('./schema/schema.js');
 var express = require('express');
 var app = express();
 var md = require("node-markdown").Markdown;
@@ -23,6 +23,7 @@ app.use('/', auth);
 app.get('/', function (req, res) {
     if (req.user){
         res.redirect('/feed');
+        return;
     }
 	res.render('index.jade', {'user': req.user});
 })
@@ -30,6 +31,7 @@ app.get('/', function (req, res) {
 app.get('/new', function (req, res) {
     if (!req.user){
         res.redirect('/signin');
+        return;
     }
 	res.render('new.jade', {'user': req.user});
 })
@@ -37,6 +39,7 @@ app.get('/new', function (req, res) {
 app.post('/new', function (req, res) {
     if (!req.user){
         res.redirect('/signin');
+        return;
     }
     var user = req.user;
 	var name = req.body.name;
@@ -51,6 +54,7 @@ app.post('/new', function (req, res) {
         if (err) 
             console.log ('Error. tutorial cant save')
         res.redirect('/tutorial/' + newTutorial._id);
+        return;
     });
 })
 
@@ -72,6 +76,7 @@ app.get('/feed', function (req, res){
 app.get('/profile', function (req, res) {
     if (!req.user){
         res.redirect('/signin');
+        return;
     }
     var context = {};
     context['user'] = req.user;
@@ -91,6 +96,7 @@ app.get('/tutorial/:objid', function (req, res){
 app.get('/edit/:objid', function (req, res){
     if (!req.user){
         res.redirect('/signin');
+        return;
     }
     var objid = req.param("objid");
     schema.Tutorial.findOne({_id: new ObjectId(objid)}, function(err,obj) {
@@ -101,6 +107,7 @@ app.get('/edit/:objid', function (req, res){
 app.post('/edit/:objid', function (req, res){
     if (!req.user){
         res.redirect('/signin');
+        return;
     }
     var user = req.user;
     var name = req.body.name;
@@ -127,6 +134,7 @@ app.post('/edit/:objid', function (req, res){
             if (err) 
                 console.log ('Error. tutorial cant save')
             res.redirect('/tutorial/' + objid);
+            return;
         });        
     });
 })
