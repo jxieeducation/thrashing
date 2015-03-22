@@ -17,7 +17,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-var auth = require('./auth.js');
+var auth = require('./user/auth.js');
 app.use('/', auth);
 
 app.get('/', function (req, res) {
