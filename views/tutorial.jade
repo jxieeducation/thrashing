@@ -6,4 +6,4 @@ block content
 		a(href="/edit/#{tutorial.id}") edit
 		p #{tutorial.description}
 		div(style="width:400px; height:200px;")
-			p #{tutorial.content}
+			p!= tutorial_html

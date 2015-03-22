@@ -6,3 +6,4 @@ crowdsourcing programming tutorials
 * race conditions on post edits
 * tutorial about page (# likes, contributors...etc.)
 * customized news feed
+* user privaleges

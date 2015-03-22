@@ -8,6 +8,6 @@ block content
 			p description
 			input(type="text", name="description", style="width:400px;", value="#{tutorial.description}")
 			p content
-			textarea(name="content", style="width:400px; height:200px;") #{tutorial.content}
+			textarea(name="content", data-provide="markdown", style="width:400px; height:200px;", row="5") #{tutorial.content}
 			p
-			input(type="submit", value="create")
+			input(type="submit", value="edit")
