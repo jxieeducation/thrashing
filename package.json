@@ -9,7 +9,10 @@
     "jade": "*",
     "passport": "*",
     "passport-local": "*",
-    "express-session": "*"
+    "mongodb": "*",
+    "express-session": "*",
+    "connect-flash": "*",
+    "mongoose-relationship": "*"
   },
   "engine": "node 0.4.1"
 }
