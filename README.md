@@ -7,3 +7,4 @@ crowdsourcing programming tutorials
 * tutorial about page (# likes, contributors...etc.)
 * customized news feed
 * user privaleges
+* draft feature for tutorials
