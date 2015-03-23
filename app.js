@@ -19,8 +19,12 @@ app.use(flash());
 
 var auth = require('./user/auth.js');
 app.use('/', auth);
+var profile = require('./user/profile.js');
+app.use('/', profile);
 var tutorial = require('./tutorial/tutorial_express.js');
 app.use('/', tutorial);
+var search = require('./tutorial/tutorial_search.js');
+app.use('/', search);
 var tutorial_api = require('./api/update_tutorial.js');
 app.use('/api/tutorial/', tutorial_api);
 
@@ -38,19 +42,6 @@ app.get('/feed', function (req, res){
             tutorials = tutorials.slice(0, 20);
         }
         res.render('feed.jade', {tutorials: tutorials, user: req.user});
-    });
-})
-
-app.get('/profile', function (req, res) {
-    if (!req.user){
-        res.redirect('/signin');
-        return;
-    }
-    var context = {};
-    context['user'] = req.user;
-    schema.Tutorial.find({'_id': { $in:req.user.tutorials }}, function(err, tutorials){
-        context['tutorials'] = tutorials;
-        res.render('profile.jade', context);
     });
 })
 

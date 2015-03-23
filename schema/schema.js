@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema =mongoose.Schema;
+var elmongo = require('elmongo');
 mongoose.connect('mongodb://localhost/thrashing');
 
 var db = mongoose.connection;
@@ -17,6 +18,7 @@ var tutorialSchema = Schema({
   	contributors: [{ type:Schema.ObjectId, ref:"User" }],
   	changes: [{ type:Schema.ObjectId, ref:"Change" }]
 })
+tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
 var changeSchema = Schema({

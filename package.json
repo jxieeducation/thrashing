@@ -13,7 +13,9 @@
     "express-session": "*",
     "connect-flash": "*",
     "node-markdown": "*",
-    "diff": "*"
+    "diff": "*",
+    "elmongo": "*",
+    "cron": "*"
   },
   "engine": "node 0.4.1"
 }
