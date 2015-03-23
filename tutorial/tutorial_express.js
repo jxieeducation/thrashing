@@ -64,7 +64,7 @@ module.exports = (function(){
 		var name = req.body.name;
 		var description = req.body.description;
 		var content = req.body.content;
-		var newTutorial = new schema.Tutorial({name:name, description:description, content:content}); 
+		var newTutorial = new schema.Tutorial({name:name, description:description, content:content, vote_score:0});
     	newTutorial.lastChanged = new Date();
     	user.tutorials.push(newTutorial._id);
     	newTutorial.contributors.push(user._id);

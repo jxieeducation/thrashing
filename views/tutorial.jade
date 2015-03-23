@@ -1,8 +1,17 @@
 extends layout
 
 block content
+	script(src='/scripts/tutorial_vote.js')
+	div(style="display:none")
+			p(id="tutorial-id") #{tutorial._id}
+
 	div(style="margin-left:150px;")
 		h1 #{tutorial.name}
+		//note: these ids are used in tutorial_vote.js
+		div(id="vote_block")
+			div(id="up-button", data-role="button") up
+			p(id="vote-score") #{tutorial.vote_score}
+			div(id="down-button", data-role="button") down
 		a(href="/edit/#{tutorial.id}") edit
 		p #{tutorial.description}
 		div(style="width:400px; height:200px;")
