@@ -21,6 +21,8 @@ var auth = require('./user/auth.js');
 app.use('/', auth);
 var tutorial = require('./tutorial/tutorial_express.js');
 app.use('/', tutorial);
+var tutorial_api = require('./api/update_tutorial.js');
+app.use('/api/tutorial/', tutorial_api);
 
 app.get('/', function (req, res) {
     if (req.user){
@@ -31,17 +33,11 @@ app.get('/', function (req, res) {
 })
 
 app.get('/feed', function (req, res){
-    schema.Tutorial.find({}, function(err, tutorials) {
-        if (tutorials.length == 0){
-            res.redirect('/profile');
-            return;
+    schema.Tutorial.find().sort({lastChanged:-1}).exec(function(err,tutorials){
+        if (tutorials.length > 20){
+            tutorials = tutorials.slice(0, 20);
         }
-        schema.Tutorial.find().sort({lastChanged:-1}).exec(function(err,tutorials){
-            if (tutorials.length > 20){
-                tutorials = tutorials.slice(0, 20);
-            }
-            res.render('feed.jade', {tutorials: tutorials, user: req.user});
-        });
+        res.render('feed.jade', {tutorials: tutorials, user: req.user});
     });
 })
 

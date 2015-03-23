@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema =mongoose.Schema;
-var relationship = require('mongoose-relationship');
 mongoose.connect('mongodb://localhost/thrashing');
 
 var db = mongoose.connection;
@@ -13,20 +12,30 @@ var tutorialSchema = Schema({
 	description: String,
 	content: String,
 	lastChanged: Date,
-  	contributors: [{ type:Schema.ObjectId, ref:"User", childPath:"tutorials" }]
+  	contributors: [{ type:Schema.ObjectId, ref:"User" }],
+  	changes: [{ type:Schema.ObjectId, ref:"Change" }]
 })
-tutorialSchema.plugin(relationship, { relationshipPathName:'contributors' });
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
+
+var changeSchema = Schema({
+	time: Date,
+	oldContent: String,
+	newContent: String,
+	tutorial: { type:Schema.ObjectId, ref:"Tutorial" },
+	creator: { type:Schema.ObjectId, ref:"User" }
+})
+var Change = mongoose.model('Change', changeSchema);
 
 var userSchema = Schema({
 	email: String,
 	password: String,
-  	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial", childPath:"contributors" }]
+  	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],
+  	changes: [{type:Schema.ObjectId, ref:"Change"}]
 })
-userSchema.plugin(relationship, { relationshipPathName:'tutorials' });
 var User = mongoose.model('User', userSchema);
 
 module.exports = {
 	Tutorial: Tutorial,
 	User: User,
+	Change: Change,
 };

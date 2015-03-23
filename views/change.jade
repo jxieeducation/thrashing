@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	div(style="margin-left:150px;")
+		a(href="/tutorial/#{change.tutorial}") tutorial
+		h3 Diff 
+		div!= diff_html

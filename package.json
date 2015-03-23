@@ -12,8 +12,8 @@
     "mongodb": "*",
     "express-session": "*",
     "connect-flash": "*",
-    "mongoose-relationship": "*",
-    "node-markdown": "*"
+    "node-markdown": "*",
+    "diff": "*"
   },
   "engine": "node 0.4.1"
 }
