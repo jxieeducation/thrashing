@@ -36,6 +36,10 @@ app.get('/', function (req, res) {
 	res.render('index.jade', {'user': req.user});
 })
 
+app.get('/about', function (req, res) {
+    res.render('about.jade', {'user': req.user});
+})
+
 app.get('/feed', function (req, res){
     schema.Tutorial.find().sort({lastChanged:-1}).exec(function(err,tutorials){
         if (tutorials.length > 20){
