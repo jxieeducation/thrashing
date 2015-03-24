@@ -1,20 +1,19 @@
 extends layout
 
 block content
-	script(src='/scripts/tutorial_vote.js')
-	div(style="display:none")
-			p(id="tutorial-id") #{tutorial._id}
+    script(src='/scripts/tutorial_vote.js')
+    div.container(style="display:none")
+            p(id="tutorial-id") #{tutorial._id}
 
-	div(style="margin-left:150px;")
-		h1 #{tutorial.name}
-		//note: these ids are used in tutorial_vote.js
-		a(href="/tutorial/#{tutorial._id}/changes") pull requests
-		p number of open pull requests: #{num_open_changes}
-		div(id="vote_block")
-			div(id="up-button", data-role="button") up
-			p(id="vote-score") #{tutorial.vote_score}
-			div(id="down-button", data-role="button") down
-		a(href="/edit/#{tutorial._id}") edit
-		p #{tutorial.description}
-		div(style="width:400px; height:200px;")
-			p!= tutorial_html
+    div.container(style="margin-top: 20px")
+        a(href="/edit/#{tutorial._id}") Edit Tutorial
+        h3 #{tutorial.name}
+        div(style="margin-top: -20px; margin-bottom: 20px", id="vote_block")
+            div(id="up-button", style="font-family: Courier", class="btn btn-micro", data-role="button") +
+            p(id="vote-score") #{tutorial.vote_score}
+            div(id="down-button", style="font-family: Courier", class="btn btn-micro", data-role="button") -
+        p #{tutorial.description}
+        div
+            p!= tutorial_html
+        p(style="margin-top: 20px; font-weight: 600") Pull Requests: #{num_open_changes}
+        a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/changes") View

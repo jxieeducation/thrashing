@@ -1,13 +1,10 @@
 extends layout
 
 block content
-	div(style="margin-left:150px;")
-		- if (user){
-			a(href="/profile") profile
-		- }
-		h3 Updates
-		each tutorial in tutorials
-			a(href="/tutorial/#{tutorial._id}")
-				div
-					p #{tutorial.name}
-					p #{tutorial.description} 
+    div.container
+        h3 Recent Edits
+        each tutorial in tutorials
+            a(href="/tutorial/#{tutorial._id}")
+                div
+                    p #{tutorial.name}
+                    p #{tutorial.description} 

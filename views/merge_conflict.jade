@@ -1,18 +1,16 @@
 extends layout
 
 block content
-	script(src='/scripts/edit.js')
-	div(style="margin-left:150px;")
-		div(style="display:none")
-			p(id="tutorial-id") #{tutorial._id}
-			p(id="change-id") #{last_change_id}
-	div(style="margin-left:150px;")
-		h2 We have a merge conflict. Please insert additions manually.
-		h3 Here is the regex of what the user changed.
-		textarea(name="content", data-provide="markdown", style="width:400px; height:200px;", row="5") #{change.newContent}
-		h3 This is the latest version.
-		//note the "edit-form" id is used in edit.js
-		form(id="edit-form", action="/merge/#{change._id}", method="post", onsubmit="return can_submit();")
-			textarea(name="content", data-provide="markdown", style="width:400px; height:200px;", row="5") #{tutorial.content}
-			p
-			input(type="submit", value="merge")
+    script(src='/scripts/edit.js')
+    div.container
+        div(style="display:none")
+            p(id="tutorial-id") #{tutorial._id}
+            p(id="change-id") #{last_change_id}
+    div.container(style="margin-top: 20px")
+        h3 Change Conflict
+        p Changes
+        textarea(readonly, name="content", data-provide="markdown", style="height:200px;") #{change.newContent}
+        form(id="edit-form", action="/merge/#{change._id}", method="post", onsubmit="return can_submit();")
+            textarea(name="content", data-provide="markdown", style="height:200px") #{tutorial.content}
+            p
+            input(class="btn btn-primary", type="submit", value="Resolve Conflict")

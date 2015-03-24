@@ -1,23 +1,19 @@
 extends layout
 
 block content
-	div(style="margin-left:150px;")
-		a(href="/tutorial/#{closed_applied_changes[0].tutorial}") tutorial
-		
-		h2 open pull requests
-		each change in open_changes
-			div
-				p #{change.time}
-				a(href="/change/#{change._id}") see full
+    div.container(style="margin-top: 20px")
+        h3(class="section-header") Open Pull Requests
+        each change in open_changes
+            div(class="time")
+                a(href="/change/#{change._id}") #{change.time}
 
-		h2 applied changes
-		each change in closed_applied_changes
-			div
-				p #{change.time}
-				a(href="/change/#{change._id}") see full
+        h3(class="section-header") Applied Changes
+        each change in closed_applied_changes
+            div(class="time")
+                a(href="/change/#{change._id}")  #{change.time}
 
-		h2 closed pull requests
-		each change in closed_unapplied_changes
-			div
-				p #{change.time}
-				a(href="/change/#{change._id}") see full
+        h3(class="section-header") Closed Pull Requests
+        each change in closed_unapplied_changes
+            div(class="time")
+                a(href="/change/#{change._id}") #{change.time}
+        a(class="btn btn-mini" href="/tutorial/#{closed_applied_changes[0].tutorial}") Back

@@ -1,30 +1,28 @@
-div.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-	div.container
-		div.navbar-header
-			button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-				span.icon-bar
-				span.icon-bar
-				span.icon-bar
-			a.navbar-brand(href="/")
-				| Thrashing
-		div.collapse.navbar-collapse
-			ul.nav.navbar-nav
-				li
-					a(href="/feed") Tutorials
-				li
-					a(href="/new") New
-				li
-					form(name="search", action="/search", method="post")
-						input(type="text", name="query", style="width:200px;")
-						input(type="submit", value="search")
-				- if(user) {
-					li
-						a(href="/profile") profile 
-					li
-						a(href="/signout") logout
-				- } else {
-					li
-						a(href="/signin") signin 
-					li 
-						a(href="/signup") signup
-				- }
+div.navbar.navbar-inverse.navbar-fixed-top(class='thrashing-header', role='navigation')
+    div.container
+        div.navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            a.navbar-brand(href="/", class='thrashing-logo')
+                | Thrashing
+        div.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li
+                    a(href="/new") Create
+                - if(user) {
+                    li
+                        a(href="/profile") Profile
+                    li
+                        a(href="/signout") Logout
+                - } else {
+                    li
+                        a(href="/signin") Log in
+                    li 
+                        a(href="/signup") Register
+                - }
+            ul.nav.navbar-nav(class="nav navbar-nav navbar-right")
+                li
+                    form(name="search", action="/search", method="post")
+                        input(class="hidden-xs hidden-sm visible-md visible-lg", type="text", placeholder="Search", name="query", id='thrashing-searchbar')
