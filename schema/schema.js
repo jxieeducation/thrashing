@@ -15,13 +15,25 @@ var tutorialSchema = Schema({
 	lastChanged: Date,
 	vote_score: Number,
 	votes: [{ ip:String, vote:Boolean }],
+	owner: { type:Schema.ObjectId, ref:"User" },
   	contributors: [{ type:Schema.ObjectId, ref:"User" }],
   	changes: [{ type:Schema.ObjectId, ref:"Change" }]
 })
 tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
+var change_status = {
+	'closed_applied': 1,
+	'closed_not_applied': 2,
+	'open': 3
+};
+var change_status_meaning = {
+	1: 'closed_applied',
+	2: 'closed_not_applied',
+	3: 'open'
+}
 var changeSchema = Schema({
+	status: Number,
 	time: Date,
 	oldContent: String,
 	newContent: String,
@@ -39,6 +51,8 @@ var userSchema = Schema({
 var User = mongoose.model('User', userSchema);
 
 module.exports = {
+	change_status: change_status,
+	change_status_meaning: change_status_meaning,
 	Tutorial: Tutorial,
 	User: User,
 	Change: Change,

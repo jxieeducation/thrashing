@@ -2,8 +2,22 @@ extends layout
 
 block content
 	div(style="margin-left:150px;")
-		a(href="/tutorial/#{changes[0].tutorial}") tutorial
-		each change in changes
-			div 
+		a(href="/tutorial/#{closed_applied_changes[0].tutorial}") tutorial
+		
+		h2 open pull requests
+		each change in open_changes
+			div
+				p #{change.time}
+				a(href="/change/#{change._id}") see full
+
+		h2 applied changes
+		each change in closed_applied_changes
+			div
+				p #{change.time}
+				a(href="/change/#{change._id}") see full
+
+		h2 closed pull requests
+		each change in closed_unapplied_changes
+			div
 				p #{change.time}
 				a(href="/change/#{change._id}") see full

@@ -17,32 +17,111 @@ module.exports = (function(){
 
 	router.get('/tutorial/:objid', function (req, res){
 		var objid = req.param("objid");
-		schema.Tutorial.findOne({_id: new ObjectId(objid)}, function(err,tutorial) {
-			res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true)});
+        var tutorial_id = new ObjectId(objid);
+		schema.Tutorial.findOne({_id: tutorial_id}, function(err,tutorial) {
+            schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
+                res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length});
+            });
 		});
 	})
 
     router.get('/tutorial/:objid/changes', function (req, res){
         var objid = req.param("objid");
         schema.Change.find({tutorial: new ObjectId(objid)}).sort({time:-1}).exec(function(err,changes){
-            if (changes.length > 20){
-                changes = changes.slice(0, 20);
+            var closed_applied_changes = [];
+            var closed_unapplied_changes = [];
+            var open_changes = [];
+            for (var i = 0; i < changes.length; i++){
+                var change = changes[i];
+                if (change.status == schema.change_status['closed_applied']){
+                    closed_applied_changes.push(change);
+                }else if (change.status == schema.change_status['closed_not_applied']){
+                    closed_unapplied_changes.push(change);
+                }else{
+                    open_changes.push(change);
+                }
             }
-            res.render('changes.jade', {changes:changes, user: req.user});
+            res.render('changes.jade', {user: req.user, closed_applied_changes:closed_applied_changes, closed_unapplied_changes:closed_unapplied_changes, open_changes:open_changes});
         });
     })
-
 
     router.get('/change/:objid', function (req, res){
         var objid = req.param("objid");
         schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
-            var oldContent = md(change.oldContent); 
-            var newContent = md(change.newContent);
+            schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
+                var isOwner = false;
+                if (req.user && (tutorial.owner.toString() == req.user._id.toString()) && (change.status == schema.change_status['open'])){
+                    isOwner = true;
+                }
+                var oldContent = md(change.oldContent); 
+                var newContent = md(change.newContent);
 
-            var diff = JsDiff.diffLines(change.oldContent, change.newContent);
-            var diff_html = diff_to_html.diff_to_html(diff);
+                var diff = JsDiff.diffLines(change.oldContent, change.newContent);
+                var diff_html = diff_to_html.diff_to_html(diff);
 
-            res.render('change.jade', {change: change, user: req.user, diff_html:diff_html});
+                res.render('change.jade', {change: change, user: req.user, diff_html:diff_html, status: schema.change_status_meaning[change.status], isOwner: isOwner});
+            });
+        });
+    })
+
+    router.post('/change/:objid/:decision', function (req, res){
+        var decision = req.param("decision") == "0" ? false : true;
+        var objid = req.param("objid");
+        schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
+            schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
+                //not owner
+                if(req.user._id.toString() != tutorial.owner.toString()){
+                    res.redirect("/tutorial/" + change.tutorial);
+                }
+                //if change rejected
+                if (!decision){
+                    change.status = schema.change_status['closed_not_applied'];
+                    change.save(function (err) {if (err) console.log ('Error. change cant save')});
+                    res.redirect("/tutorial/" + change.tutorial);
+                }else{
+                //accepted
+                    //if the version matched, so change can be applied directly
+                    if(change.oldContent == tutorial.content){
+                        change.status = schema.change_status['closed_applied'];
+                        tutorial.changes.push(change._id);
+                        tutorial.lastChanged = new Date();
+                        tutorial.content = change.newContent;
+                        tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
+                        change.save(function (err) {if (err) console.log ('Error. change cant save')});
+                        res.redirect("/tutorial/" + change.tutorial);
+                    }else{
+                    //here we hv a version conflict and need the owner to manually edit it
+                        var last_change_id = tutorial.changes[tutorial.changes.length-1];
+                        res.render('merge_conflict.jade', {'user': req.user, 'tutorial':tutorial, 'change':change, 'last_change_id':last_change_id});
+                    }
+                }
+            });
+        });
+    })
+
+    router.post('/merge/:objid', function (req, res){
+        if (!req.user){
+            res.redirect('/signin');
+            return;
+        }
+        var user = req.user;
+        var content = req.body.content;
+        var objid = req.param("objid");
+        schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
+            schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
+                //not owner
+                if(req.user._id.toString() != tutorial.owner.toString()){
+                    res.redirect("/tutorial/" + change.tutorial);
+                }
+                change.newContent = content;
+                change.status = schema.change_status['closed_applied'];
+                tutorial.content = content;
+                tutorial.lastChanged = new Date();
+                tutorial.changes.push(change._id);
+                tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
+                change.save(function (err) {if (err) console.log ('Error. change cant save')});
+                res.redirect("/tutorial/" + change.tutorial);
+            });
         });
     })
 
@@ -68,8 +147,10 @@ module.exports = (function(){
     	newTutorial.lastChanged = new Date();
     	user.tutorials.push(newTutorial._id);
     	newTutorial.contributors.push(user._id);
+        newTutorial.owner = user._id;
         //creates 1st delta
         var init_change = new schema.Change({});
+        init_change.status = schema.change_status['closed_applied'];
         init_change.time = new Date();
         init_change.oldContent = "";
         init_change.newContent = content;
@@ -119,10 +200,12 @@ module.exports = (function(){
             	return;
         	}
             var oldContent = tutorial.content;
-        	tutorial.name = name;
-        	tutorial.description = description;
-        	tutorial.content = content;
-        	tutorial.lastChanged = new Date();
+            if (tutorial.owner.toString() == user._id.toString()){
+                tutorial.name = name;
+                tutorial.description = description;
+                tutorial.content = content;
+                tutorial.lastChanged = new Date();
+            }
             //if the user profile isnt linked to the tutorial yet
         	if (tutorial.contributors.indexOf(user._id) == -1){
             	user.tutorials.push(tutorial._id);
@@ -130,13 +213,20 @@ module.exports = (function(){
         	}
 
             var newChange = new schema.Change({});
+            if (tutorial.owner.toString() == user._id.toString()){
+                newChange.status = schema.change_status['closed_applied'];
+            }else{
+                newChange.status = schema.change_status['open'];
+            }
             newChange.time = new Date();
             newChange.oldContent = oldContent;
             newChange.newContent = content;
             newChange.tutorial = tutorial._id;
             newChange.creator = user._id;
             //add references to this change
-            tutorial.changes.push(newChange._id);
+            if (tutorial.owner.toString() == user._id.toString()){
+                tutorial.changes.push(newChange._id);
+            }
             user.changes.push(newChange._id);
 
             newChange.save(function (err) {if (err) console.log ('Error. user cant save')});

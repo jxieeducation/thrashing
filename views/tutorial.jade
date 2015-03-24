@@ -8,11 +8,13 @@ block content
 	div(style="margin-left:150px;")
 		h1 #{tutorial.name}
 		//note: these ids are used in tutorial_vote.js
+		a(href="/tutorial/#{tutorial._id}/changes") pull requests
+		p number of open pull requests: #{num_open_changes}
 		div(id="vote_block")
 			div(id="up-button", data-role="button") up
 			p(id="vote-score") #{tutorial.vote_score}
 			div(id="down-button", data-role="button") down
-		a(href="/edit/#{tutorial.id}") edit
+		a(href="/edit/#{tutorial._id}") edit
 		p #{tutorial.description}
 		div(style="width:400px; height:200px;")
 			p!= tutorial_html

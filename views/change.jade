@@ -3,5 +3,14 @@ extends layout
 block content
 	div(style="margin-left:150px;")
 		a(href="/tutorial/#{change.tutorial}") tutorial
+		p status: #{status}
 		h3 Diff 
 		div!= diff_html
+		- if (isOwner){
+			form(name="reject change", action="/change/#{change._id}/0", method="post")
+				input(type="submit", value="reject")
+			form(name="accept change", action="/change/#{change._id}/1", method="post")
+				input(type="submit", value="accept")
+		-}else{
+			p only the owner of the tutorial can approve the pull request
+		-}
