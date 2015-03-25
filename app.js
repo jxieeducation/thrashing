@@ -27,6 +27,8 @@ var search = require('./tutorial/tutorial_search.js');
 app.use('/', search);
 var tutorial_api = require('./api/update_tutorial.js');
 app.use('/api/tutorial/', tutorial_api);
+var comment_api = require('./api/update_comment.js');
+app.use('/api/comment/', comment_api);
 
 app.get('/', function (req, res) {
     if (req.user){

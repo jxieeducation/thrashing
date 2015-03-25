@@ -22,6 +22,24 @@ var tutorialSchema = Schema({
 tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
+var commentSchema = Schema({
+	tutorial: { type:Schema.ObjectId, ref:"Tutorial" },
+	user: { type:Schema.ObjectId, ref:"User" },
+	subcomments: [{ type:Schema.ObjectId, ref:"Subcomment" }],
+	vote_score: Number,
+	content: String,
+	time: Date
+})
+var Comment = mongoose.model('Comment', commentSchema);
+
+var subcommentSchema = Schema({
+	comment: { type:Schema.ObjectId, ref:"Comment" },
+	user: { type:Schema.ObjectId, ref:"User" },
+	content: String,
+	time: Date
+})
+var Subcomment = mongoose.model('Subcomment', subcommentSchema);
+
 var change_status = {
 	'closed_applied': 1,
 	'closed_not_applied': 2,
@@ -54,6 +72,8 @@ module.exports = {
 	change_status: change_status,
 	change_status_meaning: change_status_meaning,
 	Tutorial: Tutorial,
+	Comment: Comment,
+	Subcomment: Subcomment,
 	User: User,
 	Change: Change,
 };

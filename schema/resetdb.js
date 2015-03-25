@@ -24,7 +24,7 @@ clean();
 
 //clean elastic search index stuff
 var exec = require('child_process').exec;
-exec('curl -XDELETE localhost:9200/tutorials', function (error, stdout, stderr) {
+exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
     if(error){
         console.log(error); 
     }

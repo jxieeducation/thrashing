@@ -3,7 +3,7 @@ TO LIST ALL ELASTIC SEARCH INDEX:
 curl http://localhost:9200/_aliases?pretty=1
 
 TO DEL ELASTIC SEARCH INDEX:
-curl -XDELETE localhost:9200/tutorials-2015-03-23t22:05:12.170z
+curl -XDELETE localhost:9200/tutorials*
 */
 var CronJob = require('cron').CronJob;
 var schema = require('./schema.js');
