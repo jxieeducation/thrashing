@@ -1,16 +1,21 @@
 extends layout
 
 block content
-    div(class="container")
-        h3 Thrashing.io
-        div(style="float:left; margin-right:50px")
-            p Crowdsourced programming tutorials
-            p Edit any tutorial like with a wikipedia page
-            p Contribute to any topic like with a github project
-        div(style="float:left")
-            form(class='form-signup', action='/signup', method='POST')
-              input(type='text', name='email' class='form-control', placeholder='email: larry@gmail.com',required, autofocus)
-              input(type='password', name='password' class='form-control', placeholder='password: Stanfurd', required)
-              button(class='btn btn-primary', type='submit') Sign up
-              span.clearfix
+    div(style="width: 100%; height: 100%; position: absolute; top: 0; left:0; background: url('http://wallpaperscraft.com/image/71230/2560x1600.jpg'); z-index:999; background-repeat: no-repeat; background-size: cover")
+        div(style="width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8)")
+            div(class="container", style="padding-top: 80px; z-index:1000")
+                table(style="width: 100%")
+                    tr
+                        td(style="vertical-align: top; width: 190px; border-right: 1px solid #9fdd9f")
+                            h3 Sign Up
+                            form(class='form-signup', action='/signup', method='POST')
+                                input(type='text', name='email' class='form-control', placeholder='Email', style="max-width: 150px; margin-top: 0px", required, autofocus)
+                                input(type='password', name='password', style="max-width: 150px", class='form-control', placeholder='Password', required)
+                                button(class='btn btn-primary', type='submit') Sign up
+                                span.clearfix
+                        td(style="vertical-align: top; padding-left: 30px")
+                            h3 Thrashing.io
+                            p Crowdsourced programming tutorials
+                            p Edit any tutorial like with a wikipedia page
+                            p Contribute to any topic like with a github project
 

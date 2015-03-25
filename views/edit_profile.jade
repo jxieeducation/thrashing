@@ -1,11 +1,12 @@
 extends layout
 
 block content
-    p please complete your profile
-    form(class='edit-profile', action='/edit_profile', method='POST')
-        input(type='text', name='name', placeholder='name')
-        input(type='text', name='company', placeholder='company or school')
-        input(type='text', name='site', placeholder='website or github')
-        button(class='btn btn-primary', type='submit') Update
-              span.clearfix
+    div.container
+        h3 Complete Profile
+        form(class='edit-profile', action='/edit_profile', method='POST')
+            input(type='text', class="form-control", name='name', placeholder='Name')
+            input(type='text', class="form-control", name='company', placeholder='Company or school')
+            input(type='text', class="form-control", name='site', placeholder='Website or Github')
+            button(class='btn btn-primary', type='submit') Update
+                  span.clearfix
         
