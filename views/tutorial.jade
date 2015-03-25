@@ -16,12 +16,15 @@ block content
             div(id="up-button", style="font-family: Courier", class="btn btn-micro", data-role="button") +
             p(id="vote-score") #{tutorial.vote_score}
             div(id="down-button", style="font-family: Courier", class="btn btn-micro", data-role="button") -
+        hr
         p #{tutorial.description}
         div
             p!= tutorial_html
-        p(style="margin-top: 20px; font-weight: 600") Pull Requests: #{num_open_changes}
+        hr
+        h4(style="margin-top: 30px;") Pull Requests: #{num_open_changes}
         a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/changes") View
-
+        hr
+        h4(style="margin-top: 30px") Comments
         //note all these id / class names that start with comment  and subcomment are used in tutorial_comments.js
         div(id="_comments")
             div(id="_comment-box")
@@ -37,9 +40,9 @@ block content
                         div(class="_new_subcomment")
                             form(onsubmit="submit_subcomment(this); return false;")
                                 input(type='text', style="display:none", id="comment_id",class='new_subcommment_id')
-                                input(type='text', id="subcomment_content", class="new_subcommment_content", placeholder='new comment',required, autofocus)
-                                button(class='btn btn-primary', type='submit') Reply
+                                input(type='text', id="subcomment_content", class="form-control new_subcommment_content", placeholder='new comment',required, autofocus)
+                                button(class='btn btn-mini', type='submit') Reply
             div(class="_new_comment")
                 form(onsubmit="submit_comment(); return false;")
-                    input(type='text', id='new_commment_content', placeholder='new comment',required, autofocus)
-                    button(class='btn btn-primary', type='submit') Post
+                    input(type='text', class="form-control", id='new_commment_content', placeholder='new comment',required, autofocus)
+                    button(class='btn btn-mini', type='submit') Post
