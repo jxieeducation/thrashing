@@ -81,7 +81,7 @@ module.exports = (function(){
     })
 
     router.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/',
+        successRedirect: '/edit_profile',
         failureRedirect: '/signup',
         failureFlash : true 
     }));

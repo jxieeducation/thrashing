@@ -2,8 +2,15 @@ extends layout
 
 block content
     div(class="container")
-        h3 Trashing
-        p Crowdsourced programming tutorials
-        p 3. Jacob Cole
-        p 2. Huasha
-        p 1. Jason Xie
+        h3 Thrashing.io
+        div(style="float:left; margin-right:50px")
+            p Crowdsourced programming tutorials
+            p Edit any tutorial like with a wikipedia page
+            p Contribute to any topic like with a github project
+        div(style="float:left")
+            form(class='form-signup', action='/signup', method='POST')
+              input(type='text', name='email' class='form-control', placeholder='email: larry@gmail.com',required, autofocus)
+              input(type='password', name='password' class='form-control', placeholder='password: Stanfurd', required)
+              button(class='btn btn-primary', type='submit') Sign up
+              span.clearfix
+

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    p please complete your profile
+    form(class='edit-profile', action='/edit_profile', method='POST')
+        input(type='text', name='name', placeholder='name')
+        input(type='text', name='company', placeholder='company or school')
+        input(type='text', name='site', placeholder='website or github')
+        button(class='btn btn-primary', type='submit') Update
+              span.clearfix
+        

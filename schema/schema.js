@@ -61,6 +61,9 @@ var changeSchema = Schema({
 var Change = mongoose.model('Change', changeSchema);
 
 var userSchema = Schema({
+	name: String,
+	company: String,
+	site: String,
 	email: String,
 	password: String,
   	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],

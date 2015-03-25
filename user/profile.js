@@ -16,11 +16,38 @@ module.exports = (function(){
             return;
         }
         var context = {};
-        context['user'] = req.user;
-        schema.Tutorial.find({'_id': { $in:req.user.tutorials }}, function(err, tutorials){
+        var user = req.user;
+        context['user'] = user;
+        schema.Tutorial.find({'_id': { $in:user.tutorials }}, function(err, tutorials){
+            context['num_contributions'] = user.changes.length;
+            context['num_tutorials'] = user.tutorials.length;
             context['tutorials'] = tutorials;
             res.render('profile.jade', context);
         });
+    })
+
+    router.get('/edit_profile', function (req, res) {
+        if (!req.user){
+            res.redirect('/signin');
+            return;
+        }
+        res.render('edit_profile.jade', {});
+    })
+
+    router.post('/edit_profile', function (req, res) {
+        if (!req.user){
+            res.redirect('/signin');
+            return;
+        }
+        var user = req.user;
+        var name = req.body.name;
+        var company = req.body.company;
+        var site = req.body.site;
+        user.name = name;
+        user.company = company;
+        user.site = site;
+        user.save(function (err) {if (err) console.log ('Error. user cant save')});
+        res.redirect('/profile');
     })
 
     return router;

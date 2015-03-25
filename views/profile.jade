@@ -3,6 +3,12 @@ extends layout
 block content
     div.container
         h3 Tutorials
+        p Welcome #{user.name}
+        p company: #{user.company} 
+        p website: 
+        a(href="#{user.site}") #{user.site}
+        p improved: #{num_tutorials} tutorials
+        p contributed: #{num_contributions} times
         each tutorial in tutorials
             a(href="/tutorial/#{tutorial._id}")
                 div
