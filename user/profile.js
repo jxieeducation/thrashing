@@ -31,7 +31,7 @@ module.exports = (function(){
             res.redirect('/signin');
             return;
         }
-        res.render('edit_profile.jade', {});
+        res.render('edit_profile.jade', {user: req.user});
     })
 
     router.post('/edit_profile', function (req, res) {

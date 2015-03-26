@@ -9,8 +9,9 @@ block content
                     p Organization: #{user.company}
                     p Website:
                     a(href="#{user.site}") #{user.site}
-                    p Tutorials Improved: #{num_tutorials} tutorials
-                    p Tutorials Contributed: #{num_contributions} times
+                    p # Improved: #{num_tutorials} tutorials
+                    p # Contributed: #{num_contributions} times
+                    a(class="btn btn-mini", href="/edit_profile") edit
                 td(style="vertical-align: top")
                     h3(style="margin-top: 0px; padding-top: 0px") My Tutorials
                     each tutorial in tutorials

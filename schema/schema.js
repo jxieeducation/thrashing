@@ -27,6 +27,7 @@ var commentSchema = Schema({
 	user: { type:Schema.ObjectId, ref:"User" },
 	subcomments: [{ type:Schema.ObjectId, ref:"Subcomment" }],
 	vote_score: Number,
+	votes: [{ ip:String, vote:Boolean }],
 	content: String,
 	time: Date
 })

@@ -7,6 +7,7 @@ function get_comments(){
         	var response = data['response'];
         	can_post_comment_check();
         	populate_comments(response);
+        	window.scrollTo(0, 0); //normally it overflows and the window gets scrolled down
     	},
     	error: function (request, status, error) {
     		console.log("Can't display comments. You are doomed");
@@ -21,9 +22,7 @@ function can_post_comment_check(){
 		var to_delete = ['_new_comment', '_new_subcomment'];
 		for (var j = 0; j < to_delete.length; j++){
 			var term = to_delete[j];
-			console.log(term);
 			var divs = document.getElementsByClassName(term);
-			console.log(divs);
 			for (var i = 0; i < divs.length; i++){
 				var div = divs[i];
 				div.remove();
@@ -93,7 +92,7 @@ function submit_subcomment(f){
         success: function(data){
         	if(data['success']){
         		var new_div = document.getElementById(comment_id);
-        		var new_subcomment_div = new_div.getElementsByClassName('_subcomment-section')[0];
+        		var new_subcomment_div = new_div.getElementsByClassName('_subcomment-section')[0].cloneNode(true);
         		new_subcomment_div.style.display='block';
         		new_subcomment_div.getElementsByClassName('_subcomment-content')[0].innerHTML = data['response'][0].content;
         		new_subcomment_div.getElementsByClassName('_subcomment-time')[0].innerHTML = data['response'][0].time;
@@ -105,6 +104,23 @@ function submit_subcomment(f){
     	},
     	error: function (request, status, error) {
     		console.log("Can't add subcomments. rip.");
+   		}
+    });
+}
+
+function votecomment(element, up_or_down){
+	var comment_id = element.parentNode.id;
+	$.ajax({
+		type: "POST",
+		data: {},
+        url: "/api/comment/vote/" + comment_id + "/" + up_or_down,
+        success: function(data){
+        	if(data['needToUpdate'] == true){
+        		element.parentNode.getElementsByClassName('_comment-vote')[0].innerHTML = data['score'];
+        	}
+    	},
+    	error: function (request, status, error) {
+    		console.log("Can't vote... rip.");
    		}
     });
 }

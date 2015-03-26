@@ -32,7 +32,7 @@ module.exports = (function(){
         var tutorial_id = new ObjectId(req.param("tutorial_id"));
         schema.Tutorial.findOne({_id: tutorial_id}, function(err,tutorial) {
             res.jsonp({ vote_score: tutorial.vote_score });
-        });     
+        });
     })
 
     //0 is down vote, 1 is up vote

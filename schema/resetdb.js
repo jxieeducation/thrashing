@@ -18,6 +18,16 @@ function clean(){
             console.log(err);
         }
     });
+    schema.Comment.remove(function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    schema.Subcomment.remove(function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
 }
 
 clean();

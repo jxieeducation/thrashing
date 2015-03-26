@@ -7,7 +7,7 @@ block content
             p(id="tutorial-id") #{tutorial._id}
             p(id="change-id") #{last_change_id}
     div.container(style="margin-top: 20px")
-        h3 Change Conflict
+        h3 Change / Merge Conflict
         p Changes
         textarea(readonly, name="content", data-provide="markdown", style="height:200px;") #{change.newContent}
         form(id="edit-form", action="/merge/#{change._id}", method="post", onsubmit="return can_submit();")

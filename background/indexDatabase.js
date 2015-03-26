@@ -6,7 +6,7 @@ TO DEL ELASTIC SEARCH INDEX:
 curl -XDELETE localhost:9200/tutorials*
 */
 var CronJob = require('cron').CronJob;
-var schema = require('./schema.js');
+var schema = require('./../schema/schema.js');
 var exec = require('child_process').exec;
 
 function ESUpdate(){
