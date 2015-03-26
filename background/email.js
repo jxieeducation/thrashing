@@ -18,7 +18,6 @@ var mailOptions = {
     to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
     subject: 'Hello ✔', // Subject line
     text: 'Hello world ✔', // plaintext body
-    html: '<b>Hello world ✔</b>' // html body
 };
 
 // send mail with defined transport object

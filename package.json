@@ -15,7 +15,8 @@
     "node-markdown": "*",
     "diff": "*",
     "elmongo": "*",
-    "cron": "*"
+    "cron": "*",
+    "s3": "*"
   },
   "engine": "node 0.4.1"
 }
