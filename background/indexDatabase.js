@@ -11,6 +11,12 @@ var exec = require('child_process').exec;
 
 function ESUpdate(){
 	console.log("starting");
+	var exec = require('child_process').exec;
+	exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
+    	if(error){
+        	console.log(error); 
+   		}
+	});
 	schema.Tutorial.sync(function (err, numSynced) {
 		if(err){
 			console.log(err);
