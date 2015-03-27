@@ -67,7 +67,7 @@ var userSchema = Schema({
 	site: String,
 	email: String,
 	password: String,
-  	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],
+  	contributed_tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],
   	changes: [{type:Schema.ObjectId, ref:"Change"}]
 })
 var User = mongoose.model('User', userSchema);

@@ -168,7 +168,7 @@ module.exports = (function(){
 		var content = req.body.content;
 		var newTutorial = new schema.Tutorial({name:name, description:description, content:content, vote_score:0});
     	newTutorial.lastChanged = new Date();
-    	user.tutorials.push(newTutorial._id);
+    	user.contributed_tutorials.push(newTutorial._id);
     	newTutorial.contributors.push(user._id);
         newTutorial.owner = user._id;
         //creates 1st delta
@@ -239,7 +239,7 @@ module.exports = (function(){
             }
             //if the user profile isnt linked to the tutorial yet
         	if (tutorial.contributors.indexOf(user._id) == -1){
-            	user.tutorials.push(tutorial._id);
+            	user.contributed_tutorials.push(tutorial._id);
             	tutorial.contributors.push(user._id);
         	}
 
