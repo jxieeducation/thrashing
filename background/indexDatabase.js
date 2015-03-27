@@ -1,4 +1,7 @@
 /*
+SHUT DOWN ES:
+curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown'
+
 TO LIST ALL ELASTIC SEARCH INDEX:
 curl http://localhost:9200/_aliases?pretty=1
 
