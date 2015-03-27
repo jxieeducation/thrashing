@@ -1,6 +1,11 @@
 extends layout
 
+block title
+    title New tutorial
+
 block content
+    script(src='/scripts/edit.js')
+    script(src='/scripts/jquery.hotkeys.js') 
     div.container
         h3 Create a Tutorial
         form(style="margin-top: -20px", action="/new", method="post")

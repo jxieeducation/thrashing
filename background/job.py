@@ -29,7 +29,7 @@ def backup():
 	call(['mongodump', '-o', 'databasefile/dump'])
 	call(['zip' ,'-r', 'databasefile/backup.zip', 'databasefile/dump/'])
 	db_file = "databasefile/backup.zip"
-	print "uploading " + datetime.datetime.now().strftime("%y/%m/%d/datadump.json")
+	print "uploading " + datetime.datetime.now().strftime("%y/%m/%d/backup.zip")
 	k.key = datetime.datetime.now().strftime("%y/%m/%d/backup.zip")
 	k.set_contents_from_filename(db_file, cb=percent_cb, num_cb=10)
 

@@ -1,11 +1,14 @@
 extends layout
 
+block title
+    title #{user_profile.name}
+
 block content
     div.container
         table(style="width: 100%; margin-top: 30px")
             tr
                 td(style="width: 30%; vertical-align: top")
-                    p Welcome #{user_profile.name}
+                    p #{user_profile.name}
                     p Organization: #{user_profile.company}
                     p Website: 
                         a(href="#{linkNoHTTPFixer(user_profile.site)}") #{user_profile.site}
