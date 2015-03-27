@@ -2,7 +2,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var schema = require('./../schema/schema.js');
 
 function dateFormater(date){
-	return date.toDateString() + " " + date.getHours().toString() + ":" + date.getMinutes().toString();
+	return date.toLocaleString();
 }
 
 function linkNoHTTPFixer(link){

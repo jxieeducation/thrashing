@@ -25,7 +25,7 @@ module.exports = (function(){
                 return;
             }
             schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
-                res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length});
+                res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length, num_contributors: tutorial.contributors.length, num_changes: tutorial.changes.length});
             });
 		});
 	})
