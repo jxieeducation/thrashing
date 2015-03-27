@@ -11,7 +11,8 @@ block content
         form(style="margin-top: -20px", action="/new", method="post")
             input(placeholder="Title", type="text", class="form-control",name="name", style="width: 300px")
             input(placeholder="Description", type="text", class="form-control", name="description", style="width: 600px;")
-            a(href="http://assemble.io/docs/Cheatsheet-Markdown.html" target="_blank") markdown cheatsheet
-            textarea(name="content", data-provide="markdown", style="width: 100%; height:600px;") Type markdown here and press preview to see :)
+            a(href="http://assemble.io/docs/Cheatsheet-Markdown.html" target="_blank") markdown cheatsheet 
+            p(style="display:inline;") (ctrl+p) to preview / edit
+            textarea(name="content", data-provide="markdown", style="width: 100%; height:400px;") Type markdown here and press preview to see :)
             p
             input(type="submit", class="btn btn-primary", value="Post Tutorial")

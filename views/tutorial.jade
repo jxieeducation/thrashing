@@ -2,6 +2,10 @@ extends layout
 block title
     title #{tutorial.name}
 
+block meta
+    meta(name='description', content='A tutorial: #{tutorial.description}')
+    meta(name='keywords', content='#{tutorial.description}')
+
 block content
     script(src='/scripts/tutorial_vote.js')
     script(src='/scripts/tutorial_comments.js')
