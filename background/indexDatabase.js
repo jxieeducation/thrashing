@@ -21,6 +21,6 @@ function ESUpdate(){
 }
 
 //elastic search will update every 1 min
-new CronJob('* * * * *', function(){
+new CronJob('*/5 * * * *', function(){
 	ESUpdate();
 }, null, true, "America/Los_Angeles");

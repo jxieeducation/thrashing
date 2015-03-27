@@ -16,7 +16,7 @@
     "diff": "*",
     "elmongo": "*",
     "cron": "*",
-    "s3": "*"
+    "serve-favicon": "*"
   },
   "engine": "node 0.4.1"
 }

@@ -19,7 +19,7 @@ div.navbar.navbar-inverse.navbar-fixed-top(class='thrashing-header', role='navig
                     a(href="/about") About
                 - if(user) {
                     li
-                        a(href="/profile") Profile
+                        a(href="/profile/#{user.id}") Profile
                     li
                         a(href="/signout") Logout
                 - } else {

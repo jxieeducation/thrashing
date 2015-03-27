@@ -6,19 +6,24 @@ var md = require("node-markdown").Markdown;
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var JsDiff = require('diff');
+var rendering_helpers = require('../api/rendering_helpers.js');
 app.use(bodyParser.urlencoded());
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 var diff_to_html = require('./diff-to-html.js');
-
 module.exports = (function(){
     var router = express.Router();
 
 	router.get('/tutorial/:objid', function (req, res){
 		var objid = req.param("objid");
         var tutorial_id = new ObjectId(objid);
+        res.locals.dateFormater = rendering_helpers.dateFormater;
 		schema.Tutorial.findOne({_id: tutorial_id}, function(err,tutorial) {
+            if(!tutorial){
+                res.status(404).send('Not found');
+                return;
+            }
             schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
                 res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length});
             });
@@ -27,7 +32,12 @@ module.exports = (function(){
 
     router.get('/tutorial/:objid/changes', function (req, res){
         var objid = req.param("objid");
+        res.locals.dateFormater = rendering_helpers.dateFormater;
         schema.Change.find({tutorial: new ObjectId(objid)}).sort({time:-1}).exec(function(err,changes){
+            if(!changes){
+                res.status(404).send('Not found');
+                return;
+            }
             var closed_applied_changes = [];
             var closed_unapplied_changes = [];
             var open_changes = [];
@@ -47,7 +57,12 @@ module.exports = (function(){
 
     router.get('/change/:objid', function (req, res){
         var objid = req.param("objid");
+        res.locals.dateFormater = rendering_helpers.dateFormater;
         schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
+            if(!change){
+                res.status(404).send('Not found');
+                return;
+            }
             schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
                 var isOwner = false;
                 if (req.user && (tutorial.owner.toString() == req.user._id.toString()) && (change.status == schema.change_status['open'])){
@@ -68,6 +83,10 @@ module.exports = (function(){
         var decision = req.param("decision") == "0" ? false : true;
         var objid = req.param("objid");
         schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
+            if(!change){
+                res.status(404).send('Not found');
+                return;
+            }
             schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
                 //not owner
                 if(req.user._id.toString() != tutorial.owner.toString()){
@@ -108,6 +127,10 @@ module.exports = (function(){
         var content = req.body.content;
         var objid = req.param("objid");
         schema.Change.findOne({_id: new ObjectId(objid)}, function(err,change) {
+            if(!change){
+                res.status(404).send('Not found');
+                return;
+            }
             schema.Tutorial.findOne({_id: new ObjectId(change.tutorial)}, function(err,tutorial) {
                 //not owner
                 if(req.user._id.toString() != tutorial.owner.toString()){
@@ -177,6 +200,10 @@ module.exports = (function(){
     	}
     	var objid = req.param("objid");
     	schema.Tutorial.findOne({_id: new ObjectId(objid)}, function(err,obj) {
+            if(!obj){
+                res.status(404).send('Not found');
+                return;
+            }
             var last_change_id = obj.changes[obj.changes.length-1];
         	res.render('edit.jade', {tutorial: obj, user: req.user, last_change_id: last_change_id});
     	});
@@ -194,6 +221,10 @@ module.exports = (function(){
 
 	    var objid = req.param("objid");
     	schema.Tutorial.findOne({_id: new ObjectId(objid)}, function(err,tutorial) {
+            if(!tutorial){
+                res.status(404).send('Not found');
+                return;
+            }
         	//if the edit didnt do shit
         	if (tutorial.name == name && tutorial.description == description && tutorial.content == content){
             	res.redirect('/tutorial/' + objid);
