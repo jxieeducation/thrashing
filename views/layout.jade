@@ -3,10 +3,12 @@ html
 	head
 		block head
 			block title
-				title Thrashing.io
+				- var thetitle = vartitle ? vartitle : "Thrashing.io"
+				title #{thetitle}
 			block meta
 				meta(name='description', content='')
 				meta(name='keywords', content='')
+			link(rel='shortcut icon', href='/images/favicon.ico', type='image/x-icon') 
 			link(rel='stylesheet', href='/css/bootstrap-markdown.min.css')
 			link(rel='stylesheet', href='/css/bootstrap.min.css')
 			| <style>

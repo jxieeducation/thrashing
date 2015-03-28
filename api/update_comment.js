@@ -1,6 +1,7 @@
 var ObjectId = require('mongoose').Types.ObjectId;
 var schema = require('./../schema/schema.js');
 var voteHelper = require('./../tutorial/vote.js');
+var rendering_helpers = require('./rendering_helpers.js');
 var express = require('express');
 var app = express();
 var md = require("node-markdown").Markdown;
@@ -14,12 +15,12 @@ function formatComments(comments, subcomments){
     var result = [];
     for (var i = 0; i < comments.length; i++){
         var comment = comments[i];
-        var wrap = {vote_score:comment.vote_score, content: comment.content, time:comment.time, _id:comment._id};
+        var wrap = {vote_score:comment.vote_score, content: comment.content, time:rendering_helpers.dateFormater(comment.time), _id:comment._id};
         var subcomment_wrap = [];
         for (var j = 0; j < subcomments.length; j++){
             var subcomment = subcomments[j];
             if (subcomment.comment.toString() == comment._id.toString()){
-                subcomment_wrap.push({ content:subcomment.content, time:subcomment.time, _id:subcomment._id });
+                subcomment_wrap.push({ content:subcomment.content, time:rendering_helpers.dateFormater(subcomment.time), _id:subcomment._id });
             }
         }
         wrap.subcomments = subcomment_wrap;
@@ -43,7 +44,7 @@ module.exports = (function(){
             if (err){
                 res.jsonp({ success: false });
             }else{
-                var response = [{ vote_score:0, content:content, time:comment.time, subcomments:[] }];
+                var response = [{ vote_score:0, content:content, time:rendering_helpers.dateFormater(comment.time), votes:[], subcomments:[], _id:comment._id }];
                 res.jsonp({ success: true, response:response });
             }
         });
@@ -65,7 +66,7 @@ module.exports = (function(){
                 if (err){
                     res.jsonp({ success: false });
                 }else{
-                    var response = [{ content:content, time:comment.time }];
+                    var response = [{ content:content, time:rendering_helpers.dateFormater(comment.time) }];
                     res.jsonp({ success: true, response:response });
                 }
             });
@@ -86,6 +87,34 @@ module.exports = (function(){
                 //we needed to do a batch read because mongoose is super annoying and doesnt allow sync. searches, and nested stuff is hard :(
                 res.jsonp({ response: formatComments(comments, subcomments) });
             });
+        });
+    })
+
+    router.post('/vote/:comment_id/:vote', function (req, res) {
+        var comment_id = req.param("comment_id");
+        var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        var vote = req.param("vote") == '0' ? false : true;
+        schema.Comment.findOne({_id: new ObjectId(comment_id)},function(err, comment){
+            var ip_voted_already = false;
+            for (var i = 0; i < comment.votes.length; i++){
+                if (comment.votes[i].ip == ip){
+                    ip_voted_already = true;
+                    //doesnt need to update since user voted already and voted the same thing, so all good
+                    if (comment.votes[i].vote == vote){
+                        res.jsonp({ needToUpdate:false });
+                        return;
+                    }
+                    //user changed their mind
+                    comment.votes[i].vote = vote;
+                }
+            }
+            //first time voting :P
+            if (!ip_voted_already){
+                comment.votes.push({ip:ip, vote:vote});
+            }
+            comment.vote_score = voteHelper.updateVote(comment);
+            comment.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
+            res.jsonp({ needToUpdate:true, score: comment.vote_score });
         });
     })
 

@@ -22,8 +22,8 @@ body {
     background: none;
     border: none;
     border-bottom: 1px solid #9fdd9f;
-    height: 28px;
-    width:120px;
+    height: 30px;
+    width: 250px;
     display: inline;
     border-radius: 0px;
     box-shadow: none;
@@ -77,10 +77,10 @@ input[type="text"].form-control, input[type="password"].form-control {
     border-bottom: 1px solid #9fdd9f;
     border-radius: 0px;
     box-shadow: none;
-    margin-top: 11px
+    margin-top: 11px;
     font-weight: 100;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 0px;
     font-family: Helvetica, Arial;
 }
 

@@ -27,7 +27,6 @@ function vote(up_or_down){
     		console.log("Can't vote... rip.");
    		}
     });
-
 }
 
 $(document).ready(function() {

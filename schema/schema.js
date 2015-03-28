@@ -27,6 +27,7 @@ var commentSchema = Schema({
 	user: { type:Schema.ObjectId, ref:"User" },
 	subcomments: [{ type:Schema.ObjectId, ref:"Subcomment" }],
 	vote_score: Number,
+	votes: [{ ip:String, vote:Boolean }],
 	content: String,
 	time: Date
 })
@@ -66,7 +67,7 @@ var userSchema = Schema({
 	site: String,
 	email: String,
 	password: String,
-  	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],
+  	contributed_tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }],
   	changes: [{type:Schema.ObjectId, ref:"Change"}]
 })
 var User = mongoose.model('User', userSchema);

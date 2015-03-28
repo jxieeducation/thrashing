@@ -88,7 +88,7 @@ module.exports = (function(){
 
     router.post('/signin', passport.authenticate('signin', {
         successRedirect : '/',
-        failureRedirect : '/login',
+        failureRedirect : '/signin',
         failureFlash : true
     }));
 

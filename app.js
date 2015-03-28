@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
+var favicon = require('serve-favicon');
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 var flash = require('connect-flash');
 var passport = require('passport');
@@ -47,6 +49,12 @@ app.get('/feed', function (req, res){
         if (tutorials.length > 20){
             tutorials = tutorials.slice(0, 20);
         }
+        res.render('feed.jade', {tutorials: tutorials, user: req.user});
+    });
+})
+
+app.get('/archive', function (req, res){
+    schema.Tutorial.find().sort({lastChanged:-1}).exec(function(err,tutorials){
         res.render('feed.jade', {tutorials: tutorials, user: req.user});
     });
 })

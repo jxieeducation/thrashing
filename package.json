@@ -3,19 +3,20 @@
   "description": "tutorial making app",
   "author": "jxieeducation@berkeley.edu",
   "dependencies": {
-    "mongoose": "*",
+    "mongoose": "3.8.25",
     "body-parser": "*",
     "express": "*",
     "jade": "*",
     "passport": "*",
     "passport-local": "*",
-    "mongodb": "*",
+    "mongodb": "1.4.35",
     "express-session": "*",
     "connect-flash": "*",
     "node-markdown": "*",
     "diff": "*",
-    "elmongo": "*",
-    "cron": "*"
+    "elmongo": "0.1.9",
+    "cron": "*",
+    "serve-favicon": "*"
   },
   "engine": "node 0.4.1"
 }

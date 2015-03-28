@@ -6,16 +6,20 @@ div.navbar.navbar-inverse.navbar-fixed-top(class='thrashing-header', role='navig
                 span.icon-bar
                 span.icon-bar
             a.navbar-brand(href="/", class='thrashing-logo')
-                | Thrashing
+                | Thrashing.io
         div.collapse.navbar-collapse
             ul.nav.navbar-nav
                 li
-                    a(href="/about") About
+                    a(href="/new") Make tutorial
                 li
-                    a(href="/new") Create
+                    form(name="search", action="/search", method="post")
+                        input(type="text", placeholder="Search", name="query", id='thrashing-searchbar')
+            ul.nav.navbar-nav(class="nav navbar-nav navbar-right")
+                li 
+                    a(href="/about") About
                 - if(user) {
                     li
-                        a(href="/profile") Profile
+                        a(href="/profile/#{user.id}") Profile
                     li
                         a(href="/signout") Logout
                 - } else {
@@ -24,7 +28,3 @@ div.navbar.navbar-inverse.navbar-fixed-top(class='thrashing-header', role='navig
                     li 
                         a(href="/signup") Register
                 - }
-            ul.nav.navbar-nav(class="nav navbar-nav navbar-right")
-                li
-                    form(name="search", action="/search", method="post")
-                        input(class="hidden-xs hidden-sm visible-md visible-lg", type="text", placeholder="Search", name="query", id='thrashing-searchbar')

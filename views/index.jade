@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    div(style="width: 100%; height: 100%; position: fixed; z-index: -1000; top: 0; left:0; background: url('http://wallpaperscraft.com/image/71230/2560x1600.jpg'); background-repeat: no-repeat; background-size: cover")
+    div(style="width: 100%; height: 100%; position: fixed; z-index: -1000; top: 0; left:0; background: url('/images/background-min.png'); background-repeat: no-repeat; background-size: cover")
         div(style="width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85)")
     div(class="container", style="z-index:1000")
         table(style="width: 100%")
@@ -13,9 +13,10 @@ block content
                         input(type='password', name='password', style="max-width: 150px", class='form-control', placeholder='Password', required)
                         button(class='btn btn-primary', type='submit') Sign up
                         span.clearfix
-                td(style="vertical-align: top; padding-left: 30px")
-                    h3 Thrashing.io
-                    p Crowdsourced programming tutorials
-                    p Edit any tutorial like with a wikipedia page
-                    p Contribute to any topic like with a github project
+                td(style="vertical-align: top; padding-left: 30px; text-align:center; vertical-align:middle;")
+                    h1 Create great programming tutorials, together
+                    h3 Edit tutorials like wikipedia pages
+                    h3 Contribute topics like github projects
+                    a(class='btn btn-primary', href="/about") Philosophy
+                    a(class='btn btn-primary', href="/feed") Tutorials
 

@@ -1,12 +1,30 @@
 extends layout
 
+block title
+    title Edit profile
+
 block content
     div.container
         h3 Complete Profile
         form(class='edit-profile', action='/edit_profile', method='POST')
-            input(type='text', class="form-control", name='name', placeholder='Name')
-            input(type='text', class="form-control", name='company', placeholder='Company or school')
-            input(type='text', class="form-control", name='site', placeholder='Website or Github')
+            - if(user.name){
+                input(type='text', class="form-control", name='name', placeholder='#{user.name}')
+            -}else{
+                input(type='text', class="form-control", name='name', placeholder='Name')
+            -}
+
+            - if(user.company){
+                input(type='text', class="form-control", name='company', placeholder='#{user.company}')
+            -}else{
+                input(type='text', class="form-control", name='company', placeholder='Company or school')
+            -}
+            
+            - if(user.site){
+                input(type='text', class="form-control", name='site', placeholder='#{user.site}')
+            -}else{
+                input(type='text', class="form-control", name='site', placeholder='Website or Github')
+            -}
+            
             button(class='btn btn-primary', type='submit') Update
                   span.clearfix
         

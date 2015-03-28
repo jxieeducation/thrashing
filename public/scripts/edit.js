@@ -1,3 +1,21 @@
+(function ($, undefined) {
+    $.fn.getCursorPosition = function() {
+        var el = $(this).get(0);
+        var pos = 0;
+        if('selectionStart' in el) {
+            pos = el.selectionStart;
+        } else if('selection' in document) {
+            el.focus();
+            var Sel = document.selection.createRange();
+            var SelLength = document.selection.createRange().text.length;
+            Sel.moveStart('character', -el.value.length);
+            pos = Sel.text.length - SelLength;
+        }
+        return pos;
+    }
+})(jQuery);
+
+//in edit checks if someone else merged in already
 function can_submit(){
 	var change_id = document.getElementById('change-id').innerHTML;
 	var tutorial_id = document.getElementById('tutorial-id').innerHTML;
@@ -21,6 +39,17 @@ function can_submit(){
 	});
 	return false;
 }
+
+//for the ctrl + p --> preview hotkey
+function preview(){
+    document.getElementsByClassName('btn-sm')[9].click();
+}
+
+$(document).ready(function() {
+    
+    $(document).bind('keydown', 'ctrl+p', preview);
+    
+});
 
 if (typeof exports === 'object') {
   exports.can_submit = can_submit;

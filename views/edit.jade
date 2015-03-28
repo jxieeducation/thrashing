@@ -1,7 +1,11 @@
 extends layout
 
+block title
+    title Edit #{tutorial.name}
+
 block content
     script(src='/scripts/edit.js')
+    script(src='/scripts/jquery.hotkeys.js')    
     div.container
         h3 Edit Tutorial
         div(style="display:none")
@@ -10,9 +14,10 @@ block content
 
         // NOTE make sure the id is edit-form, this is used to make async call via /script/edit.js
         form(id="edit-form", style="margin-top: -20px", action="/edit/#{tutorial._id}", method="post", onsubmit="return can_submit();")
-            input(placeholder="Title", type="text", class="form-control",name="name", style="width: 200px", value="#{tutorial.name}")
-            input(placeholder="Description", type="text", class="form-control", name="description", style="width: 200px;", value="#{tutorial.description}")
-            p
-            textarea(name="content", data-provide="markdown", style="width: 100%; height:200px;") #{tutorial.content}
+            input(placeholder="Title", type="text", class="form-control",name="name", style="width: 300px", value="#{tutorial.name}")
+            input(placeholder="Description", type="text", class="form-control", name="description", style="width: 600px;", value="#{tutorial.description}")
+            a(href="http://assemble.io/docs/Cheatsheet-Markdown.html" target="_blank") markdown cheatsheet 
+            p(style="display:inline;") (ctrl+p) to preview / edit
+            textarea(name="content", data-provide="markdown", style="width: 100%; height:400px;") #{tutorial.content}
             p
             input(type="submit", class="btn btn-primary", value="Update Tutorial")
