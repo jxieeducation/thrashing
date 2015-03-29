@@ -12,14 +12,19 @@ var CronJob = require('cron').CronJob;
 var schema = require('./../schema/schema.js');
 var exec = require('child_process').exec;
 
+exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
+    if(error){
+        console.log(error); 
+    }
+});
+
 function ESUpdate(){
 	console.log("starting");
-	var exec = require('child_process').exec;
-	exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
-    	if(error){
-        	console.log(error); 
-   		}
-	});
+	// exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
+ //    	if(error){
+ //        	console.log(error); 
+ //   		}
+	// });
 	schema.Tutorial.sync(function (err, numSynced) {
 		if(err){
 			console.log(err);
