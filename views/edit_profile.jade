@@ -6,7 +6,7 @@ block title
 block content
     div.container
         h3 Complete Profile
-        form(class='edit-profile', action='/edit_profile', method='POST')
+        form(class='edit-profile', style="max-width: 300px", action='/edit_profile', method='POST')
             - if(user.name){
                 input(type='text', class="form-control", name='name', placeholder='#{user.name}')
             -}else{
@@ -24,7 +24,7 @@ block content
             -}else{
                 input(type='text', class="form-control", name='site', placeholder='Website or Github')
             -}
-            
+            br
             button(class='btn btn-primary', type='submit') Update
                   span.clearfix
         

@@ -10,11 +10,11 @@ div.navbar.navbar-inverse.navbar-fixed-top(class='thrashing-header', role='navig
         div.collapse.navbar-collapse
             ul.nav.navbar-nav
                 li
-                    a(href="/new") Make tutorial
-                li
                     form(name="search", action="/search", method="post")
                         input(type="text", placeholder="Search", name="query", id='thrashing-searchbar')
             ul.nav.navbar-nav(class="nav navbar-nav navbar-right")
+                li
+                    a(href="/new") Create
                 li 
                     a(href="/about") About
                 - if(user) {

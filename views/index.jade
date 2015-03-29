@@ -1,22 +1,22 @@
 extends layout
 
 block content
-    div(style="width: 100%; height: 100%; position: fixed; z-index: -1000; top: 0; left:0; background: url('/images/background-min.png'); background-repeat: no-repeat; background-size: cover")
-        div(style="width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85)")
+    div(class="background")
+        div(class="background-blur")
     div(class="container", style="z-index:1000")
-        table(style="width: 100%")
+        table(style="width: 100%; height: 100%;")
             tr
-                td(style="vertical-align: top; width: 190px; border-right: 1px solid #9fdd9f")
-                    h3 Sign Up
+                td(style="vertical-align: top; width: 190px; border-right: 1px solid     #777")
+                    h3(style="color: #555") Sign Up
                     form(class='form-signup', action='/signup', method='POST')
-                        input(type='text', name='email' class='form-control', placeholder='Email', style="max-width: 150px; margin-top: 0px", required, autofocus)
-                        input(type='password', name='password', style="max-width: 150px", class='form-control', placeholder='Password', required)
-                        button(class='btn btn-primary', type='submit') Sign up
+                        input(type='text', name='email' class='form-control', placeholder='Email', style="max-width: 150px; margin-top: 0px; border-color:     #777;", required, autofocus)
+                        input(type='password', name='password', style="border-color:     #777; max-width: 150px", class='form-control', placeholder='Password', required)
+                        button(class='btn btn-primary', style="border-color:     #777; color:     #777;", type='submit') Sign up
                         span.clearfix
-                td(style="vertical-align: top; padding-left: 30px; text-align:center; vertical-align:middle;")
-                    h1 Create great programming tutorials, together
-                    h3 Edit tutorials like wikipedia pages
-                    h3 Contribute topics like github projects
-                    a(class='btn btn-primary', href="/about") Philosophy
-                    a(class='btn btn-primary', href="/feed") Tutorials
+                td(style="border-color:     #777; vertical-align: top; padding-left: 30px; text-align:center; vertical-align:middle;")
+                    h3(style="color: #555; margin-bottom: 20px") Create great programming tutorials, together
+                    p Edit tutorials like wikipedia pages, contribute to topics like github projects
+                    a(class='btn btn-primary', style="border-color:     #777; color:     #777;", href="/about") Philosophy
+                    br
+                    a(class='btn btn-primary', style="border-color:     #777; color:     #777;", href="/feed") Tutorials
 

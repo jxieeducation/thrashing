@@ -10,6 +10,10 @@ body {
     padding-bottom: 7px;
 }
 
+.thrashing-logo {
+    margin-right: 20px;
+}
+
 .navbar-inverse .navbar-brand.thrashing-logo {
     color: #5fad5f;
 }
@@ -143,3 +147,40 @@ button.navbar-toggle, .navbar-inverse .navbar-toggle:hover, .navbar-inverse .nav
     background: #eee;
     outline: 0 !important;
 }
+
+textarea {
+    resize: none;
+}
+
+textarea:focus {
+    outline: 0;
+}
+
+.background-blur {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.background {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1000;
+    top: 0;
+    left:0;
+    background: url('http://api.ning.com/files/kV4MbYiv7oQGZByZsG0AQBtkn-R2TyY*59noxHhWhtOgLKPKQEAbFTn3RjzmcG81EZEyDrgFDFEiT20-DmH4Ga0bchaLpNcW/1082094802.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover
+}
+
