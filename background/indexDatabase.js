@@ -1,4 +1,7 @@
 /*
+START ES:
+~/bin/elasticsearch/bin/elasticsearch
+
 SHUT DOWN ES:
 curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown'
 
@@ -12,14 +15,15 @@ var CronJob = require('cron').CronJob;
 var schema = require('./../schema/schema.js');
 var exec = require('child_process').exec;
 
+exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
+    if(error){
+        console.log(error); 
+    }
+    ESUpdate();
+});
+
 function ESUpdate(){
 	console.log("starting");
-	var exec = require('child_process').exec;
-	exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
-    	if(error){
-        	console.log(error); 
-   		}
-	});
 	schema.Tutorial.sync(function (err, numSynced) {
 		if(err){
 			console.log(err);
