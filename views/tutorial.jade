@@ -9,57 +9,57 @@ block meta
 block content
     script(src='/scripts/tutorial_vote.js')
     script(src='/scripts/tutorial_comments.js')
-    div.container(style="display:none")
-        p(id="tutorial-id") #{tutorial._id}
+    div.container
+        p(style="display:none", id="tutorial-id") #{tutorial._id}
         - if(user){
-            p(id="user-id") #{user._id}
+            p(style="display: none", id="user-id") #{user._id}
         -}
+        table(style="width: 100%; margin-top: 30px")
+                tr
+                    td(style="width: 70%; vertical-align: top")
+                        div(style="margin-top: -10px; margin-bottom: -10px", id="vote_block")
+                            h3(style="margin-bottom: -10px") #{tutorial.name}
+                            div(id="up-button", style="font-family: Courier", class="btn btn-micro", data-role="button") +
+                            p(id="vote-score") #{tutorial.vote_score}
+                            div(id="down-button", style="font-family: Courier", class="btn btn-micro", data-role="button") -
+                        hr
+                        p #{tutorial.description}
+                        hr
+                        div
+                        p!= tutorial_html
+                        hr
+                        h4(style="margin-top: 30px") Comments
+                        //note all these id / class names that start with comment  and subcomment are used in tutorial_comments.js
+                        div(id="_comments")
+                            div(id="_comment-box")
+                                div(class="_comment-section", id='ID HERE', style="display:none")
+                                    div(style="font-family: Courier", class="btn btn-micro", data-role="button", onClick="votecomment(this, '1')") +
+                                    p(class="_comment-vote", style="display:inline; margin-left: 8px; margin-right:8px;") 3 votes for this
+                                    div(style="font-family: Courier", class="btn btn-micro", data-role="button", "float:left", onClick="votecomment(this, '0')") -
+                                    pre(class="_comment-content", style="background-color:white") content
+                                    p(class="_comment-time") 12pm march 12
+                                    div(class="_subcomments", style="margin-left:30px;")
+                                        div(class="_subcomment-box")
+                                            div(class="_subcomment-section" style="display:none;")
+                                                pre(class="_subcomment-content", style="background-color:white") subcontent? LELELELEL
+                                                p(class="_subcomment-time") 12.01pm
+                                        div(class="_new_subcomment")
+                                            form(onsubmit="submit_subcomment(this); return false;")
+                                                input(type='text', style="display:none", id="comment_id",class='new_subcommment_id')
+                                                textarea(type='text', id="subcomment_content", class="form-control new_subcommment_content",placeholder='new comment',required, autofocus)
+                                                button(class='btn btn-mini', type='submit') Reply
+                            div(class="_new_comment")
+                                form(onsubmit="submit_comment(); return false;")
+                                    textarea(type='text', class="form-control", id='new_commment_content', placeholder='new comment',required, autofocus)
+                                    button(class='btn btn-mini', type='submit') Post
 
-    table(style="width: 90%; margin-top: 30px; margin-left: 50px;")
-            tr
-                td(style="width: 70%; vertical-align: top")
-                    div(style="margin-top: -20px; margin-bottom: 20px", id="vote_block")
-                        div(id="up-button", style="font-family: Courier", class="btn btn-micro", data-role="button") +
-                        p(id="vote-score") #{tutorial.vote_score}
-                        div(id="down-button", style="font-family: Courier", class="btn btn-micro", data-role="button") -
-                        h3(style="display:inline; margin-left: 20px;") #{tutorial.name}
-                    hr
-                    p #{tutorial.description}
-                    hr
-                    div
-                    p!= tutorial_html
-                    hr
-                    h4(style="margin-top: 30px") Comments
-                    //note all these id / class names that start with comment  and subcomment are used in tutorial_comments.js
-                    div(id="_comments")
-                        div(id="_comment-box")
-                            div(class="_comment-section", id='ID HERE', style="display:none")
-                                div(style="font-family: Courier", class="btn btn-micro", data-role="button", onClick="votecomment(this, '1')") +
-                                p(class="_comment-vote", style="display:inline; margin-left: 8px; margin-right:8px;") 3 votes for this
-                                div(style="font-family: Courier", class="btn btn-micro", data-role="button", "float:left", onClick="votecomment(this, '0')") -
-                                pre(class="_comment-content", style="background-color:white") content
-                                p(class="_comment-time") 12pm march 12
-                                div(class="_subcomments", style="margin-left:30px;")
-                                    div(class="_subcomment-box")
-                                        div(class="_subcomment-section" style="display:none;")
-                                            pre(class="_subcomment-content", style="background-color:white") subcontent? LELELELEL
-                                            p(class="_subcomment-time") 12.01pm
-                                    div(class="_new_subcomment")
-                                        form(onsubmit="submit_subcomment(this); return false;")
-                                            input(type='text', style="display:none", id="comment_id",class='new_subcommment_id')
-                                            textarea(type='text', id="subcomment_content", class="form-control new_subcommment_content",placeholder='new comment',required, autofocus)
-                                            button(class='btn btn-mini', type='submit') Reply
-                        div(class="_new_comment")
-                            form(onsubmit="submit_comment(); return false;")
-                                textarea(type='text', class="form-control", id='new_commment_content', placeholder='new comment',required, autofocus)
-                                button(class='btn btn-mini', type='submit') Post
-
-                td(style="vertical-align: top; border-left: 1px dotted #ddd; width: 20%;")
-                    a(style="margin-left:30px; margin-top:80px;", href="/profile/#{tutorial.owner}") author link
-                    a(class="btn", style="width:100px; margin-left: 30px;", href="/edit/#{tutorial._id}") Edit Tutorial
-                    p(style="margin-left:30px;") updated: #{dateFormater(tutorial.lastChanged)}
-                    
-                    p(style="margin-left:30px;") # Contributors: #{num_contributors}
-                    p(style="margin-left:30px;") # Commits: #{num_changes}
-                    h4(style="margin-top: 30px; margin-left: 30px;") Pull Requests: #{num_open_changes}
-                    a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/changes" style="margin-left: 30px;") View
+                    td(style="vertical-align: top; width: 20%;")
+                        a(style="margin-left:30px; margin-top:80px;", href="/profile/#{tutorial.owner}") #{tutorial.owner}
+                        br
+                        a(class="btn", style="width:100px; margin-left: 30px;", href="/edit/#{tutorial._id}") Edit Tutorial
+                        p(style="margin-left:30px;") Updated: #{dateFormater(tutorial.lastChanged)}
+                        
+                        p(style="margin-left:30px;") # Contributors: #{num_contributors}
+                        p(style="margin-left:30px;") # Commits: #{num_changes}
+                        h4(style="margin-top: 30px; margin-left: 30px;") Pull Requests: #{num_open_changes}
+                        a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/changes" style="margin-left: 30px;") View
