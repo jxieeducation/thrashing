@@ -16,15 +16,11 @@ exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr)
     if(error){
         console.log(error); 
     }
+    ESUpdate();
 });
 
 function ESUpdate(){
 	console.log("starting");
-	// exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
- //    	if(error){
- //        	console.log(error); 
- //   		}
-	// });
 	schema.Tutorial.sync(function (err, numSynced) {
 		if(err){
 			console.log(err);
