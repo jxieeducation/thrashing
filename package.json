@@ -16,7 +16,8 @@
     "diff": "*",
     "elmongo": "0.1.9",
     "cron": "*",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "nodemailer": "*"
   },
   "engine": "node 0.4.1"
 }

@@ -22,14 +22,6 @@ var tutorialSchema = Schema({
 tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
-Tutorial.sync(function (err, numSynced) {
-	if(err){
-		console.log(err);
-	}else{
-		console.log('number of tutorials synced:', numSynced);
-	}
-});
-
 var commentSchema = Schema({
 	tutorial: { type:Schema.ObjectId, ref:"Tutorial" },
 	user: { type:Schema.ObjectId, ref:"User" },

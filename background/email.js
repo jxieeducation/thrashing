@@ -1,30 +1,66 @@
+var CronJob = require('cron').CronJob;
+var schema = require('./../schema/schema.js');
+var fs = require('fs');
 var nodemailer = require('nodemailer');
 
-// create reusable transporter object using SMTP transport
+var obj = JSON.parse(fs.readFileSync('private_settings.json', 'utf8'));
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: 'gmail.user@gmail.com',
-        pass: 'userpass'
+        user: obj['gmail_user'],
+        pass: obj['gmail_pass']
     }
 });
 
-// NB! No need to recreate the transporter object. You can use
-// the same transporter object for all e-mails
-
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: 'Fred Foo ✔ <foo@blurdybloop.com>', // sender address
-    to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world ✔', // plaintext body
-};
-
-// send mail with defined transport object
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        console.log(error);
-    }else{
-        console.log('Message sent: ' + info.response);
+function sendUpdateToUser(user, tutorials){
+    var msg = "Hello " + user.name + ",\n\n\tHere are the tutorials that are updated in the past 24 hrs.\n\n"
+    for(var i = 0; i <= tutorials.length; i++){
+        var tutorial = tutorials[i];
+        msg += tutorial.name + "(" + obj['server_address'] + "tutorial/" + tutorial._id + "): ";
+        msg += obj['server_address'] + "tutorial/" + tutorial._id + "/changes"; 
+        msg += "\n\n";
     }
-});
+    var mailOptions = {
+        from: obj['gmail_user'],
+        to: user.email,
+        subject: 'New updates to tutorials - Thrashing',
+        text: msg,
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Message sent: ' + info.response);
+        }
+    });
+}
+
+//daily email - if a tutorial that u follow was changed by someone who is not you, you get an email
+function userEmail(user){
+    var changed_tutorials = []
+    schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}, function(err, tutorials){
+        for (var i = 0; i < tutorials.length; i++){
+            var tutorial = tutorials[i];
+            //if the tutorial is changed in the past 24 hrs
+            if ((((new Date).getTime() - tutorial.lastChanged.getTime()) - 24 * 60 * 60 * 1000)){
+                changed_tutorials.push(tutorial);
+            }
+        }
+        if (changed_tutorials != []){
+            sendUpdateToUser(user, changed_tutorials);
+        }
+    });
+}
+
+function emailJob(){
+    schema.User.find({}, function(err, users) {
+        for(var i = 0; i < users.length; i++){
+            userEmail(users[i]);
+        }
+    });
+}
+
+//5am seems to be a good time to send ppl update emails
+new CronJob('0 5 * * *', function(){
+    emailJob();
+}, null, true, "America/Los_Angeles");

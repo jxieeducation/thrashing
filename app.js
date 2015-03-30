@@ -32,6 +32,14 @@ app.use('/api/tutorial/', tutorial_api);
 var comment_api = require('./api/update_comment.js');
 app.use('/api/comment/', comment_api);
 
+schema.Tutorial.sync(function (err, numSynced) {
+    if(err){
+        console.log(err);
+    }else{
+        console.log('number of tutorials synced:', numSynced);
+    }
+});
+
 app.get('/', function (req, res) {
     if (req.user){
         res.redirect('/feed');
