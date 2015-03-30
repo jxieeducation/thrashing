@@ -28,8 +28,10 @@ module.exports = (function(){
         router.post('/search', function (req, res) {
             var query = req.body.query;
             schema.Tutorial.search({ query: query, fuzziness: 0.5 }, function (err, results) {
-                if(err) console.log(err);
-
+                if(err){
+                    res.render('search.jade', {user: req.user});
+                    return;
+                }
                 res.render('search.jade', {user: req.user, results:EStoTutorials(results)});
             })
         });
