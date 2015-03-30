@@ -3,7 +3,7 @@ START ES:
 ~/bin/elasticsearch/bin/elasticsearch
 
 SHUT DOWN ES:
-curl -XPOST 10.1.10.52:9200/_shutdown
+curl -XPOST 0.0.0.0:9200/_shutdown
 
 TO LIST ALL ELASTIC SEARCH INDEX:
 curl http://localhost:9200/_aliases?pretty=1
@@ -15,25 +15,20 @@ var CronJob = require('cron').CronJob;
 var schema = require('./../schema/schema.js');
 var exec = require('child_process').exec;
 
-exec('curl -XDELETE localhost:9200/tutorials*', function (error, stdout, stderr) {
-    if(error){
-        console.log(error); 
-    }
-    ESUpdate();
-});
-
 function ESUpdate(){
-	console.log("starting");
-	schema.Tutorial.sync(function (err, numSynced) {
-		if(err){
-			console.log(err);
-		}else{
-			console.log('number of tutorials synced:', numSynced);
-		}
+	exec('curl -XPOST 0.0.0.0:9200/_shutdown', function (error, stdout, stderr) {
+    	if(error){
+        	console.log(error); 
+    	}
+    	exec('~/bin/elasticsearch/bin/elasticsearch', function (error, stdout, stderr) {
+    		if(error){
+        		console.log(error); 
+    		}
+    	});
 	});
 }
 
-//elastic search will update every 1 min
-new CronJob('*/5 * * * *', function(){
+//elastic search will restart every 12 hrs
+new CronJob('0 1,13 * * *', function(){
 	ESUpdate();
 }, null, true, "America/Los_Angeles");
