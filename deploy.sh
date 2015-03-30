@@ -2,6 +2,7 @@
 
 #elastic search
 sudo apt-get update
+#curl http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.1.zip -o temp-es.zip && unzip temp-es.zip && rm temp-es.zip && mv elasticsearch-0.90.1 ~/bin/elasticsearch && ~/bin/elasticsearch/bin/elasticsearch
 #https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-on-an-ubuntu-vps
 sudo apt-get install unzip zip
 mkdir bin
@@ -19,7 +20,7 @@ npm i
 
 #python scheduler
 sudo apt-get install python-pip
-sudo pip install schedule boto
+sudo pip install schedule boto creepy
 
 #mongodb screen
 screen -S mongo

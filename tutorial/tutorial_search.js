@@ -24,16 +24,18 @@ function EStoTutorials(result){
 
 module.exports = (function(){
     var router = express.Router();
+    try{
+        router.post('/search', function (req, res) {
+            var query = req.body.query;
+            schema.Tutorial.search({ query: query, fuzziness: 0.5 }, function (err, results) {
+                if(err) console.log(err);
 
-    router.post('/search', function (req, res) {
-        var query = req.body.query;
-        schema.Tutorial.search({ query: query, fuzziness: 0.5 }, function (err, results) {
-            if(err) console.log(err);
-
-            res.render('search.jade', {user: req.user, results:EStoTutorials(results)});
-        })
-    })
-
+                res.render('search.jade', {user: req.user, results:EStoTutorials(results)});
+            })
+        });
+    } catch(err){
+        res.render('search.jade', {user: req.user});
+    }
     return router;
 })();
 
