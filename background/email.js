@@ -14,7 +14,7 @@ var transporter = nodemailer.createTransport({
 
 function sendUpdateToUser(user, tutorials){
     var msg = "Hello " + user.name + ",\n\n\tHere are the tutorials that are updated in the past 24 hrs.\n\n"
-    for(var i = 0; i <= tutorials.length; i++){
+    for(var i = 0; i < tutorials.length; i++){
         var tutorial = tutorials[i];
         msg += tutorial.name + "(" + obj['server_address'] + "tutorial/" + tutorial._id + "): ";
         msg += obj['server_address'] + "tutorial/" + tutorial._id + "/changes"; 
@@ -42,11 +42,11 @@ function userEmail(user){
         for (var i = 0; i < tutorials.length; i++){
             var tutorial = tutorials[i];
             //if the tutorial is changed in the past 24 hrs
-            if ((((new Date).getTime() - tutorial.lastChanged.getTime()) - 24 * 60 * 60 * 1000)){
+            if ((((new Date).getTime() - tutorial.lastChanged.getTime()) - 24 * 60 * 60 * 1000) < 0){
                 changed_tutorials.push(tutorial);
             }
         }
-        if (changed_tutorials != []){
+        if (changed_tutorials.length != 0){
             sendUpdateToUser(user, changed_tutorials);
         }
     });
