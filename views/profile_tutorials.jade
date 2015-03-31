@@ -9,23 +9,11 @@ block meta
 
 block content
     div.container
-        table(style="width: 100%; margin-top: 30px")
-            tr
-                td(style="width: 30%; vertical-align: top")
-                    p #{user_profile.name}
-                    p Organization: #{user_profile.company}
-                    p Website: 
-                        a(href="#{linkNoHTTPFixer(user_profile.site)}") #{user_profile.site}
-                    p # Improved: #{num_tutorials} tutorials
-                    p # Contributed: #{num_contributions} times
-                    - if(can_edit_profile_info){
-                        a(class="btn btn-mini", href="/edit_profile") edit
-                    -}
-                td(style="vertical-align: top")
-                    h3(style="margin-top: 0px; padding-top: 0px") Tutorials
-                    each tutorial in tutorials
-                        a(href="/tutorial/#{tutorial._id}")
-                            div
-                                p #{tutorial.name}
-                                p #{tutorial.description}
-                            hr(style="margin-top: 10px; margin-bottom: 10px;")
+        a(href="/profile/#{user_profile._id}") back
+        Tutorials
+            each tutorial in tutorials
+                a(href="/tutorial/#{tutorial._id}")
+                    div
+                        p #{tutorial.name}
+                        p #{tutorial.description}
+                hr(style="margin-top: 10px; margin-bottom: 10px;")

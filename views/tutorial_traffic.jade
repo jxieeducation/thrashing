@@ -1,0 +1,22 @@
+extends layout
+
+block title
+    title #{tutorial.name} traffic
+
+block meta
+    meta(name='description', content='#{tutorial.name} traffic analysis')
+    meta(name='keywords', content='#{tutorial.name} traffic analysis')
+
+block content
+    div.container
+        a(href="/tutorial/#{tutorial._id}") back
+        h3 Traffic sources
+        each source in traffic
+            div
+                p
+                    | #{source.value} - 
+                    - if (source.key == "direct"){
+                        a(href='') #{source.key}
+                    - } else{
+                        a(href='#{source.key}') #{source.key}
+                    - }

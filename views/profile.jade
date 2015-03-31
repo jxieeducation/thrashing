@@ -28,6 +28,7 @@ block content
                     -}
                 td(style="vertical-align: top; max-width: 500px; overflow: hidden;")
                     h3(style="margin-top: 0px; padding-top: 0px") Tutorials
+                    a(href="/profile_tutorials/#{user_profile._id}") see all
                     each tutorial in tutorials
                         a(href="/tutorial/#{tutorial._id}")
                             div(style="display:block;")

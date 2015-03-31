@@ -1,5 +1,6 @@
 var ObjectId = require('mongoose').Types.ObjectId;
 var schema = require('./../schema/schema.js');
+var voteHelper = require('./vote.js');
 var express = require('express');
 var app = express();
 var md = require("node-markdown").Markdown;
@@ -16,6 +17,7 @@ module.exports = (function(){
     var router = express.Router();
 
 	router.get('/tutorial/:objid', function (req, res){
+        var visitor = voteHelper.visitorInfo(req);
 		var objid = req.param("objid");
         var tutorial_id = new ObjectId(objid);
         res.locals.dateFormater = rendering_helpers.dateFormater;
@@ -24,6 +26,8 @@ module.exports = (function(){
                 res.status(404).send('Not found');
                 return;
             }
+            tutorial.visitors.push(visitor);
+            tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
             schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
                 res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length, num_contributors: tutorial.contributors.length, num_changes: tutorial.changes.length});
             });
@@ -270,6 +274,31 @@ module.exports = (function(){
         	});
     	});
 	})
+
+    router.get('/tutorial/:objid/traffic', function (req, res){
+        var objid = req.param("objid");
+        var tutorial_id = new ObjectId(objid);
+        schema.Tutorial.findOne({_id: tutorial_id}, function(err,tutorial) {
+            if(!tutorial){
+                res.status(404).send('Not found');
+                return;
+            }
+            var traffic = {};
+            for (var i = 0; i < tutorial.visitors.length; i++){
+                var referer = tutorial.visitors[i].referer;
+                if (referer.indexOf(tutorial._id.toString()) != -1){
+                    continue; //this is a self reference and should not count
+                }
+                if(traffic.hasOwnProperty(referer)){
+                    traffic[referer] += 1;
+                }else{
+                    traffic[referer] = 1;
+                }
+            }
+            traffic = voteHelper.sortObject(traffic);
+            res.render('tutorial_traffic.jade', {tutorial: tutorial, user: req.user, traffic:traffic});
+        });
+    })
 
     return router;
 })();

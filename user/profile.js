@@ -11,28 +11,6 @@ app.use(bodyParser.urlencoded());
 module.exports = (function(){
     var router = express.Router();
 
-    router.get('/profile', function (req, res) {
-        if(!req.user){
-            res.redirect('/signin');
-            return;
-        }
-        var context = {};
-        var user = req.user;
-        res.locals.linkNoHTTPFixer = rendering_helpers.linkNoHTTPFixer;
-        context['user_profile'] = user;
-        context['user'] = user;
-        context['can_edit_profile_info'] = (req.user && req.user._id.toString() == user._id.toString())? true : false;
-        schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({vote_score:-1}).exec(function(err,tutorials){
-            context['num_contributions'] = user.changes.length;
-            context['num_tutorials'] = user.contributed_tutorials.length;
-            if(tutorials.length > 3){
-                tutorials = tutorials.slice(0, 3);
-            }
-            context['tutorials'] = tutorials;
-            res.render('profile.jade', context);
-        });
-    })
-
     router.get('/profile/:user_id', function (req, res) {
         var context = {};
         var user_id = req.param("user_id");
@@ -53,6 +31,23 @@ module.exports = (function(){
                 }
                 context['tutorials'] = tutorials;
                 res.render('profile.jade', context);
+            });
+        });
+    })
+
+    router.get('/profile_tutorials/:user_id', function (req, res) {
+        var context = {};
+        var user_id = req.param("user_id");
+        res.locals.linkNoHTTPFixer = rendering_helpers.linkNoHTTPFixer;
+        schema.User.findOne({_id: user_id}, function(err, user) {
+            if(!user){
+                res.status(404).send('Not found');
+                return;
+            }
+            schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({last_changed:-1}).exec(function(err,tutorials){
+                context['user_profile'] = user;
+                context['tutorials'] = tutorials;
+                res.render('profile_tutorials.jade', context);
             });
         });
     })
