@@ -31,6 +31,8 @@ var tutorial_api = require('./api/update_tutorial.js');
 app.use('/api/tutorial/', tutorial_api);
 var comment_api = require('./api/update_comment.js');
 app.use('/api/comment/', comment_api);
+var profile_api = require('./api/update_profile.js');
+app.use('/api/profile/', profile_api);
 
 schema.Tutorial.sync(function (err, numSynced) {
     if(err){

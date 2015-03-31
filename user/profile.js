@@ -22,9 +22,12 @@ module.exports = (function(){
         context['user_profile'] = user;
         context['user'] = user;
         context['can_edit_profile_info'] = (req.user && req.user._id.toString() == user._id.toString())? true : false;
-        schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}, function(err, tutorials){
+        schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({vote_score:-1}).exec(function(err,tutorials){
             context['num_contributions'] = user.changes.length;
             context['num_tutorials'] = user.contributed_tutorials.length;
+            if(tutorials.length > 3){
+                tutorials = tutorials.slice(0, 3);
+            }
             context['tutorials'] = tutorials;
             res.render('profile.jade', context);
         });
@@ -42,9 +45,12 @@ module.exports = (function(){
             context['user_profile'] = user;
             context['user'] = (req.user)? req.user : null;
             context['can_edit_profile_info'] = (req.user && req.user._id.toString() == user._id.toString())? true : false;
-            schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}, function(err, tutorials){
+            schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({vote_score:-1}).exec(function(err,tutorials){
                 context['num_contributions'] = user.changes.length;
                 context['num_tutorials'] = user.contributed_tutorials.length;
+                if(tutorials.length > 3){
+                    tutorials = tutorials.slice(0, 3);
+                }
                 context['tutorials'] = tutorials;
                 res.render('profile.jade', context);
             });

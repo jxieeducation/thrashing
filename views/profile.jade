@@ -8,7 +8,12 @@ block meta
     meta(name='keywords', content='#{user_profile.name}, #{user_profile.email}, #{user_profile.company}, #{user_profile.site}')
 
 block content
+    script(src='//d3js.org/d3.v3.min.js')
+    script(src='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js')
+    link(rel='stylesheet', href='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css')
+    script(src='/scripts/profile.js')
     div.container
+        p(style="display:none", id="profile-id") #{user_profile._id}
         table(style="width: 100%; margin-top: 30px")
             tr
                 td(style="width: 30%; vertical-align: top")
@@ -21,11 +26,14 @@ block content
                     - if(can_edit_profile_info){
                         a(class="btn btn-mini", href="/edit_profile") edit
                     -}
-                td(style="vertical-align: top")
+                td(style="vertical-align: top; max-width: 500px; overflow: hidden;")
                     h3(style="margin-top: 0px; padding-top: 0px") Tutorials
                     each tutorial in tutorials
                         a(href="/tutorial/#{tutorial._id}")
-                            div
-                                p #{tutorial.name}
-                                p #{tutorial.description}
-                            hr(style="margin-top: 10px; margin-bottom: 10px;")
+                            div(style="display:block;")
+                                h3(style="float:left; margin-top:0px;") #{tutorial.vote_score}
+                                p(style="margin-left:30px;") #{tutorial.name}
+                                p(style="margin-left:30px; color: #777") #{tutorial.description}
+                    p(style="margin-top:30px;") contributions in the last 6 months
+                    p(id="heatmap-grid-info") 
+                    div(id="cal-heatmap")
