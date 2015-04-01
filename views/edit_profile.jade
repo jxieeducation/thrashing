@@ -4,9 +4,9 @@ block title
     title Edit Profile
 
 block content
-    div.container
+    div.container.main
         h3 Complete Profile
-        form(class='edit-profile', style="max-width: 300px", action='/edit_profile', method='POST')
+        form(class='edit-profile', action='/edit_profile', method='POST')
             - if(user.name){
                 input(type='text', class="form-control", name='name', placeholder='#{user.name}')
             -}else{

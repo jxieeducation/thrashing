@@ -8,12 +8,12 @@ block meta
     meta(name='keywords', content='#{user_profile.name}, #{user_profile.email}, #{user_profile.company}, #{user_profile.site}')
 
 block content
-    div.container
-        a(href="/profile/#{user_profile._id}") back
-        Tutorials
-            each tutorial in tutorials
-                a(href="/tutorial/#{tutorial._id}")
-                    div
-                        p #{tutorial.name}
-                        p #{tutorial.description}
-                hr(style="margin-top: 10px; margin-bottom: 10px;")
+    div.container.main
+        h3 My Tutorials
+        each tutorial in tutorials
+            a(href="/tutorial/#{tutorial._id}")
+                div.block
+                    h3.left #{tutorial.vote_score}
+                    p.left-indent.active #{tutorial.name}
+                    p.left-indent #{tutorial.description}
+            hr(style="margin-top: 10px; margin-bottom: 10px;")

@@ -4,12 +4,12 @@ block title
     title Tutorial Feed
 
 block content
-    div.container
-        h3 Learn, Discover, Grow
+    div.container.main
+        h3 Learn. Discover. Grow.
         each tutorial in tutorials
             a(href="/tutorial/#{tutorial._id}")
-                div(style="display:block;")
-                    h3(style="float:left; margin-top:0px;") #{tutorial.vote_score}
-                    p(style="margin-left:30px;") #{tutorial.name}
-                    p(style="margin-left:30px; color: #777") #{tutorial.description}
+                div.block
+                    h3.left #{tutorial.vote_score}
+                    p.left-indent.active.bold #{tutorial.name}
+                    p.left-indent #{tutorial.description}
                 hr

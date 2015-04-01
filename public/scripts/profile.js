@@ -13,11 +13,12 @@ function init_heatmap(){
         cellSize: 13,
         legend: [1, 3, 5],
         displayLegend: false,
-        highlight: new Date(),//highlight today
-        onClick: function(date, nb) {
-            var display_string = nb.toString() + " contributions on " + (date.getMonth() + 1).toString() + "/" + date.getDate() + "/" + date.getFullYear();
-            document.getElementById('heatmap-grid-info').innerHTML = display_string;
-        }
+        tooltip: true,
+                    subDomainTitleFormat: {
+                empty: "No contributions on {date}",
+                filled: "{count} contributions on {date}"
+            },
+        highlight: new Date()
     });
 }
 

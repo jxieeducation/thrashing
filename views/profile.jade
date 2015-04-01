@@ -12,29 +12,26 @@ block content
     script(src='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js')
     link(rel='stylesheet', href='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css')
     script(src='/scripts/profile.js')
-    div.container
-        p(style="display:none", id="profile-id") #{user_profile._id}
-        table(style="width: 100%; margin-top: 30px")
-            tr
-                td(style="width: 30%; vertical-align: top")
-                    p #{user_profile.name}
-                    p Organization: #{user_profile.company}
-                    p Website: 
-                        a(href="#{linkNoHTTPFixer(user_profile.site)}") #{user_profile.site}
-                    p # Improved: #{num_tutorials} tutorials
-                    p # Contributed: #{num_contributions} times
-                    - if(can_edit_profile_info){
-                        a(class="btn btn-mini", href="/edit_profile") edit
-                    -}
-                td(style="vertical-align: top; max-width: 500px; overflow: hidden;")
-                    h3(style="margin-top: 0px; padding-top: 0px") Tutorials
-                    a(href="/profile_tutorials/#{user_profile._id}") see all
-                    each tutorial in tutorials
-                        a(href="/tutorial/#{tutorial._id}")
-                            div(style="display:block;")
-                                h3(style="float:left; margin-top:0px;") #{tutorial.vote_score}
-                                p(style="margin-left:30px;") #{tutorial.name}
-                                p(style="margin-left:30px; color: #777") #{tutorial.description}
-                    p(style="margin-top:30px;") contributions in the last 6 months
-                    p(id="heatmap-grid-info") 
-                    div(id="cal-heatmap")
+    div.container.main
+        div.left(style="min-width: 150px; width: 30%;")
+            p(style="display:none", id="profile-id") #{user_profile._id}
+            h3 #{user_profile.name}
+            p Organization: #{user_profile.company}
+            p Website: 
+                a(href="#{linkNoHTTPFixer(user_profile.site)}") #{user_profile.site}
+            p # Improved: #{num_tutorials} tutorials
+            p # Contributed: #{num_contributions} times
+            - if(can_edit_profile_info){
+                a(class="btn btn-mini", href="/edit_profile") edit
+            -}
+        div.left(style="width: 70%;")
+            h3 Tutorials
+            each tutorial in tutorials
+                a(href="/tutorial/#{tutorial._id}")
+                    div.block
+                        h3.left #{tutorial.vote_score}
+                        p.left-indent.active #{tutorial.name}
+                        p.left-indent #{tutorial.description}
+            a(class="btn btn-mini", href="/profile_tutorials/#{user_profile._id}") View All
+            p(id="heatmap-grid-info")
+            div(class="hidden-xs", id="cal-heatmap")

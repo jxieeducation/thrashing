@@ -5,8 +5,8 @@ block meta
   meta(name='keywords', content='register signup')
 
 block content
-  div.container
-    div.row(style="width: 100%; max-width: 300px; margin-left: auto; margin-right: auto")
+  div.container.main
+    div.row.modal
         h3.text-center.login-title Register
           div.account-wall
             form(class='form-signup', action='/signup', method='POST')

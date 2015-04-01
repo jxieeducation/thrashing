@@ -8,15 +8,12 @@ block meta
     meta(name='keywords', content='#{tutorial.name} traffic analysis')
 
 block content
-    div.container
-        a(href="/tutorial/#{tutorial._id}") back
+    div.container.main
         h3 Traffic sources
         each source in traffic
-            div
-                p
-                    | #{source.value} - 
-                    - if (source.key == "direct"){
-                        a(href='') #{source.key}
-                    - } else{
-                        a(href='#{source.key}') #{source.key}
-                    - }
+            a(href='#{source.key}')
+                div.block
+                    h3.left #{source.value}
+                    p.left-indent.active #{source.key}
+            br
+

@@ -1,19 +1,21 @@
 extends layout
 
 block content
-    div.container(style="margin-top: 20px")
+    div.container.main
         h3(class="section-header") Open Pull Requests
         each change in open_changes
             div(class="time")
                 a(href="/change/#{change._id}") #{ dateFormater(change.time) } 
                     a(href="/profile/#{change.creator}") contributor
-
+        div.spacing
+        div.spacing
         h3(class="section-header") Applied Changes
         each change in closed_applied_changes
             div(class="time")
                 a(href="/change/#{change._id}")  #{ dateFormater(change.time) } 
                     a(href="/profile/#{change.creator}") contributor
-
+        div.spacing
+        div.spacing
         h3(class="section-header") Closed Pull Requests
         each change in closed_unapplied_changes
             div(class="time")
