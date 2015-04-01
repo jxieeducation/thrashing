@@ -12,6 +12,7 @@ var tutorialSchema = Schema({
 	name: String,
 	description: String,
 	content: String,
+	created: Date,
 	lastChanged: Date,
 	vote_score: Number,
 	votes: [{ ip:String, vote:Boolean }],

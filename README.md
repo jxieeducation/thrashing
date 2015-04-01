@@ -6,3 +6,4 @@ crowdsourcing programming tutorials
 * analytics for the tutorial
 * url encode
 * related tutorials
+* upload images to s3

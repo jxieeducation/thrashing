@@ -172,6 +172,7 @@ module.exports = (function(){
 		var content = req.body.content;
 		var newTutorial = new schema.Tutorial({name:name, description:description, content:content, vote_score:0});
     	newTutorial.lastChanged = new Date();
+        newTutorial.created = new Date();
     	user.contributed_tutorials.push(newTutorial._id);
     	newTutorial.contributors.push(user._id);
         newTutorial.owner = user._id;
@@ -286,7 +287,7 @@ module.exports = (function(){
             var traffic = {};
             for (var i = 0; i < tutorial.visitors.length; i++){
                 var referer = tutorial.visitors[i].referer;
-                if (referer.indexOf(tutorial._id.toString()) != -1){
+                if (referer.indexOf("thrashing.io") != -1){
                     continue; //this is a self reference and should not count
                 }
                 if(traffic.hasOwnProperty(referer)){
@@ -302,4 +303,3 @@ module.exports = (function(){
 
     return router;
 })();
-
