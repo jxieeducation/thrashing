@@ -24,6 +24,13 @@ var tutorialSchema = Schema({
 tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
+//what users see on newsfeed
+var feedSchema = Schema({
+	type: { type : String }, 
+  	tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }]
+})
+var Feed = mongoose.model('Feed', feedSchema);
+
 var commentSchema = Schema({
 	tutorial: { type:Schema.ObjectId, ref:"Tutorial" },
 	user: { type:Schema.ObjectId, ref:"User" },
@@ -82,4 +89,5 @@ module.exports = {
 	Subcomment: Subcomment,
 	User: User,
 	Change: Change,
+	Feed: Feed,
 };

@@ -3,3 +3,5 @@ db.tutorials.find().forEach( function(tutorial){
 	tutorial.created = new Date();
 	db.tutorials.save(tutorial);
 })
+
+db.feeds.insert({ type: "main", tutorials: []})

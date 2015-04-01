@@ -12,18 +12,11 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-function sendUpdateToUser(user, tutorials){
-    var msg = "Hello " + user.name + ",\n\n\tHere are the tutorials that are updated in the past 24 hrs.\n\n"
-    for(var i = 0; i < tutorials.length; i++){
-        var tutorial = tutorials[i];
-        msg += tutorial.name + "(" + obj['server_address'] + "tutorial/" + tutorial._id + "): ";
-        msg += obj['server_address'] + "tutorial/" + tutorial._id + "/changes"; 
-        msg += "\n\n";
-    }
+function sendUpdateToUser(user, msg){
     var mailOptions = {
         from: obj['gmail_user'],
         to: user.email,
-        subject: 'New updates to tutorials - Thrashing',
+        subject: 'Daily Digest - Thrashing',
         text: msg,
     };
     transporter.sendMail(mailOptions, function(error, info){
@@ -35,28 +28,24 @@ function sendUpdateToUser(user, tutorials){
     });
 }
 
-//daily email - if a tutorial that u follow was changed by someone who is not you, you get an email
-function userEmail(user){
-    var changed_tutorials = []
-    schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}, function(err, tutorials){
-        for (var i = 0; i < tutorials.length; i++){
-            var tutorial = tutorials[i];
-            //if the tutorial is changed in the past 24 hrs
-            if ((((new Date).getTime() - tutorial.lastChanged.getTime()) - 24 * 60 * 60 * 1000) < 0){
-                changed_tutorials.push(tutorial);
-            }
-        }
-        if (changed_tutorials.length != 0){
-            sendUpdateToUser(user, changed_tutorials);
-        }
-    });
-}
 
 function emailJob(){
-    schema.User.find({}, function(err, users) {
-        for(var i = 0; i < users.length; i++){
-            userEmail(users[i]);
-        }
+    schema.Feed.findOne({type:"main"}, function(err, feed){
+        schema.Tutorial.find({'_id': { $in:feed.tutorials }}, function(err,tutorials){
+            var msg = "Hey, Thrashing daily digest here.\n\n";
+            for(var i = 0; i < tutorials.length; i++){
+                var tutorial = tutorials[i];
+                msg += obj['server_address'] + "tutorial/" + tutorial._id + "\n";
+                msg += tutorial.name + "\n";
+                msg += tutorial.description + "\n"; 
+                msg += "\n\n";
+            }
+            schema.User.find({}, function(err, users) {
+                for(var i = 0; i < users.length; i++){
+                    sendUpdateToUser(users[i], msg);
+                }
+            });
+        });
     });
 }
 

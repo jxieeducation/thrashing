@@ -55,11 +55,10 @@ app.get('/about', function (req, res) {
 })
 
 app.get('/feed', function (req, res){
-    schema.Tutorial.find().sort({lastChanged:-1}).exec(function(err,tutorials){
-        if (tutorials.length > 20){
-            tutorials = tutorials.slice(0, 20);
-        }
-        res.render('feed.jade', {tutorials: tutorials, user: req.user});
+    schema.Feed.findOne({type:"main"}, function(err, feed){
+        schema.Tutorial.find({'_id': { $in:feed.tutorials }}, function(err,tutorials){
+            res.render('feed.jade', {tutorials: tutorials, user: req.user});
+        });
     });
 })
 

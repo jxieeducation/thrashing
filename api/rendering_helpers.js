@@ -6,6 +6,9 @@ function dateFormater(date){
 }
 
 function linkNoHTTPFixer(link){
+	if (!link){
+		return "";
+	}
 	var url = link.toString();
 	if (url.indexOf('http') == -1){
 		return "http://" + url;
