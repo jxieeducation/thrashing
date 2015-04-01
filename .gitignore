@@ -2,3 +2,4 @@ node_modules/*
 databasefile/*
 private_settings.json
 public/sitemap*
+*.pyc

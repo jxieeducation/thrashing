@@ -49,7 +49,4 @@ function emailJob(){
     });
 }
 
-//5am seems to be a good time to send ppl update emails
-new CronJob('0 5 * * *', function(){
-    emailJob();
-}, null, true, "America/Los_Angeles");
+emailJob();

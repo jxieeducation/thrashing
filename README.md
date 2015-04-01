@@ -2,7 +2,11 @@
 crowdsourcing programming tutorials
 
 ####to do:
-* a great tutorials feed
-* url encode
+* url fix
 * related tutorials
+* feed experiment
+* tags (look at how github is doing it)
+* 
 * upload images to s3
+* 
+* 

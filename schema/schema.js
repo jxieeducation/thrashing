@@ -19,7 +19,8 @@ var tutorialSchema = Schema({
 	owner: { type:Schema.ObjectId, ref:"User" },
   	contributors: [{ type:Schema.ObjectId, ref:"User" }],
   	changes: [{ type:Schema.ObjectId, ref:"Change" }],
-  	visitors: [{ ip: String, referer: {type:String, default:'direct'}, time: Date}]
+  	visitors: [{ ip: String, referer: {type:String, default:'direct'}, time: Date}],
+  	related_tutorials: [{ type:Schema.ObjectId, ref:"Tutorial" }]
 })
 tutorialSchema.plugin(elmongo);
 var Tutorial = mongoose.model('Tutorial', tutorialSchema);

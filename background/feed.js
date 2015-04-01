@@ -45,6 +45,4 @@ function updateFeed(){
     });
 }
 
-new CronJob('*/15 * * * *', function(){
-    updateFeed();
-}, null, true, "America/Los_Angeles"); 
+updateFeed();

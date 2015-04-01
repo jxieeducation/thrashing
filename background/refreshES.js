@@ -19,16 +19,18 @@ function ESUpdate(){
 	exec('curl -XPOST 0.0.0.0:9200/_shutdown', function (error, stdout, stderr) {
     	if(error){
         	console.log(error); 
+            return;
     	}
-    	exec('~/bin/elasticsearch/bin/elasticsearch', function (error, stdout, stderr) {
-    		if(error){
-        		console.log(error); 
-    		}
-    	});
+        setTimeout(function(){
+            exec('~/bin/elasticsearch/bin/elasticsearch', function (error, stdout, stderr) {
+                if(error){
+                    console.log(error); 
+                    return;
+                }
+                console.log("restarted ES");
+            });
+        }, 5000);
 	});
 }
 
-//elastic search will restart every 12 hrs
-new CronJob('0 1,13 * * *', function(){
-	ESUpdate();
-}, null, true, "America/Los_Angeles");
+ESUpdate();
