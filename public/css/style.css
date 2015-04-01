@@ -237,3 +237,9 @@ textarea.content.short {
     margin-right: auto
 }
 
+.banner { 
+    width:100%; 
+    margin-bottom:30px; 
+    border-radius: 8px;
+}
+

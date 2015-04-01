@@ -9,6 +9,8 @@ block meta
 
 block content
     div.container.main
+        img.banner(src="/images/banner.png")
+        h3 Trending Tutorials
         each tutorial in tutorials
             a(href="/tutorial/#{tutorial._id}")
                 div.block
