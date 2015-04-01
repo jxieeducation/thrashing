@@ -57,11 +57,10 @@ block content
                         a(style="margin-left:30px; margin-top:80px;", href="/profile/#{tutorial.owner}") author
                         br
                         a(class="btn", style="width:100px; margin-left: 30px;", href="/edit/#{tutorial._id}") Edit Tutorial
+                        p(style="margin-left: 30px") #{tutorial.visitors.length} views
+                        a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/traffic" style="margin-left: 30px;") Traffic
                         p(style="margin-left:30px;") Updated: #{dateFormater(tutorial.lastChanged)}
-                        
                         p(style="margin-left:30px;") # Contributors: #{num_contributors}
                         p(style="margin-left:30px;") # Commits: #{num_changes}
                         h4(style="margin-top: 30px; margin-left: 30px;") Pull Requests: #{num_open_changes}
                         a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/changes" style="margin-left: 30px;") View
-                        br
-                        a(class="btn btn-mini", href="/tutorial/#{tutorial._id}/traffic" style="margin-left: 30px;") Traffic

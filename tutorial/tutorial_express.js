@@ -26,7 +26,9 @@ module.exports = (function(){
                 res.status(404).send('Not found');
                 return;
             }
-            tutorial.visitors.push(visitor);
+            if (visitor.referer.indexOf("127.0.0.1") == -1 && visitor.referer.indexOf("thrashing.io") == -1 ){
+                tutorial.visitors.push(visitor);
+            }
             tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
             schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
                 res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length, num_contributors: tutorial.contributors.length, num_changes: tutorial.changes.length});
@@ -287,9 +289,6 @@ module.exports = (function(){
             var traffic = {};
             for (var i = 0; i < tutorial.visitors.length; i++){
                 var referer = tutorial.visitors[i].referer;
-                if (referer.indexOf("thrashing.io") != -1){
-                    continue; //this is a self reference and should not count
-                }
                 if(traffic.hasOwnProperty(referer)){
                     traffic[referer] += 1;
                 }else{
