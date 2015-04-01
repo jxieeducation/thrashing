@@ -8,19 +8,19 @@ block content
         h3 Complete Profile
         form(class='edit-profile', action='/edit_profile', method='POST')
             - if(user.name){
-                input(type='text', class="form-control", name='name', placeholder='#{user.name}')
+                input(type='text', class="form-control", name='name', value='#{user.name}')
             -}else{
                 input(type='text', class="form-control", name='name', placeholder='Name')
             -}
 
             - if(user.company){
-                input(type='text', class="form-control", name='company', placeholder='#{user.company}')
+                input(type='text', class="form-control", name='company', value='#{user.company}')
             -}else{
                 input(type='text', class="form-control", name='company', placeholder='Company or school')
             -}
             
             - if(user.site){
-                input(type='text', class="form-control", name='site', placeholder='#{user.site}')
+                input(type='text', class="form-control", name='site', value='#{user.site}')
             -}else{
                 input(type='text', class="form-control", name='site', placeholder='Website or Github')
             -}

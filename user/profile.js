@@ -73,7 +73,7 @@ module.exports = (function(){
         user.company = company;
         user.site = site;
         user.save(function (err) {if (err) console.log ('Error. user cant save')});
-        res.redirect('/profile');
+        res.redirect('/profile/' + user._id);
     })
 
     return router;
