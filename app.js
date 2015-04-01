@@ -47,7 +47,11 @@ app.get('/', function (req, res) {
         res.redirect('/feed');
         return;
     }
-	res.render('index.jade', {'user': req.user});
+    schema.Feed.findOne({type:"main"}, function(err, feed){
+        schema.Tutorial.find({'_id': { $in:feed.tutorials }}, function(err,tutorials){
+            res.render('index.jade', {tutorials: tutorials, user: req.user});
+        });
+    });
 })
 
 app.get('/about', function (req, res) {

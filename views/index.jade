@@ -1,5 +1,18 @@
 extends layout
 
+block title
+    title Thrashing.io
+
+block meta
+    meta(name='description', content='Thrashing.io')
+    meta(name='keywords', content='Thrashing.io Homepage')
+
 block content
     div.container.main
-        h3 0 Tutorials
+        each tutorial in tutorials
+            a(href="/tutorial/#{tutorial._id}")
+                div.block
+                    h3.left #{tutorial.vote_score}
+                    p.left-indent.active.bold #{tutorial.name}
+                    p.left-indent #{tutorial.description}
+                hr
