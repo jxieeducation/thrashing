@@ -1,21 +1,24 @@
 extends layout
 
+block title
+    title Thrashing Login
+
 block meta
-  meta(name='description', content='Thrashing login')
-  meta(name='keywords', content='signin login')
+    meta(name='description', content='Thrashing login')
+    meta(name='keywords', content='signin login')
 
 block content
-  div.container.main
-    div.row.modal
-        h3.text-center.login-title Sign In
-          div.account-wall
-            form(class='form-signin', action='/signin', method='POST')
-              input(type='text', name='email' class='form-control', placeholder='Email',required, autofocus)
-              input(type='password', name='password' class='form-control', placeholder='Password', required)
-              br
-              button(class='btn btn-primary', type='submit') Sign in
-              span.clearfix
-          a(href='/signup', class='btn btn-primary') Create an account
-          #message
-          if message
-            h1.text-center.error-message #{message}
+    div.container.main
+        div.row
+            h3.text-center.login-title Sign In
+            div.account-wall
+                form(class='form-signin', action='/signin', method='POST')
+                    input(type='text', name='email' class='form-control', placeholder='Email',required, autofocus)
+                    input(type='password', name='password' class='form-control', placeholder='Password', required)
+                    br
+                    button(class='btn btn-primary', type='submit') Sign in
+                    span.clearfix
+            a(href='/signup', class='btn btn-primary') Create an account
+            #message
+            if message
+                h1.text-center.error-message #{message}

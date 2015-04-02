@@ -30,8 +30,10 @@ module.exports = (function(){
                 tutorial.visitors.push(visitor);
             }
             tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
-            schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,objs) {
-                res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: objs.length, num_contributors: tutorial.contributors.length, num_changes: tutorial.changes.length});
+            schema.Change.find({tutorial: tutorial_id, status: schema.change_status['open']}, function(err,open_changes) {
+                schema.Tutorial.find({'_id': { $in:tutorial.related_tutorials }}, function(err, related_tutorials){
+                    res.render('tutorial.jade', {tutorial: tutorial, user: req.user, tutorial_html:md(tutorial.content, true), num_open_changes: open_changes.length, num_contributors: tutorial.contributors.length, num_changes: tutorial.changes.length, related_tutorials: related_tutorials});
+                });
             });
 		});
 	})
@@ -173,6 +175,7 @@ module.exports = (function(){
 		var description = req.body.description;
 		var content = req.body.content;
 		var newTutorial = new schema.Tutorial({name:name, description:description, content:content, vote_score:0});
+        newTutorial.uri = encodeURIComponent(name.split(" ").join("-")).toLowerCase() + "-" + newTutorial._id.toString();
     	newTutorial.lastChanged = new Date();
         newTutorial.created = new Date();
     	user.contributed_tutorials.push(newTutorial._id);

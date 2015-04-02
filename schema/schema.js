@@ -9,6 +9,7 @@ db.once('open', function (callback) {
 });
 
 var tutorialSchema = Schema({
+	uri: String,
 	name: String,
 	description: String,
 	content: String,

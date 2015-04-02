@@ -10,11 +10,21 @@ block meta
 block content
     div.container.main
         img.banner(src="/images/banner.png")
-        h3 Trending Tutorials
-        each tutorial in tutorials
-            a(href="/tutorial/#{tutorial._id}")
-                div.block
-                    h3.left #{tutorial.vote_score}
-                    p.left-indent.active.bold #{tutorial.name}
-                    p.left-indent #{tutorial.description}
-                hr
+        div.left(style="width: 49%")
+            h3 Trending Tutorials
+            each tutorial in main_tutorials
+                a(href="/tutorial/#{tutorial._id}")
+                    div.block
+                        p.active.bold #{tutorial.name}
+                        p #{tutorial.description}
+                    hr
+        div.right(style="width: 49%; padding-left: 10px;", class="hidden-xs")
+            h3 Best Weekly Tutorials
+            each tutorial in overall_tutorials
+                a(href="/tutorial/#{tutorial._id}")
+                    div.block
+                        p.active.bold #{tutorial.name}
+                        p #{tutorial.description}
+                    hr
+
+        

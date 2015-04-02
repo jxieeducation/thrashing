@@ -13,14 +13,17 @@ variables:
 - T2 - time since created in hrs
 - vote_score
 
+@main feed - fb newsfeed
 score = vote_score * (0.99) ^ T1 + 15 * max(0, (36 - T2) / 36)
--> first part is a decay function, note 0.99 ^ 24 is about 75%
--> second part is to boost new posts, with automatic 15 points that decays over 36 hrs
+
+@overall feed - best tutorials made in the past week
+score = vote_score * ((t2 > 24 * 7) ? 0 : 1)
+
 */
 function updateFeed(){
     console.log("re-calculating top tutorials");
     schema.Tutorial.find({}, function(err, tutorials){
-        //the first part generate the generic feed
+        //@main
         var tutorial_list = {};
         for (var i = 0; i < tutorials.length; i++){
             var tutorial = tutorials[i];
@@ -34,8 +37,27 @@ function updateFeed(){
         if(tutorial_list.length > 10){
             tutorial_list = tutorial_list.slice(0, 10);
         }
-        console.log(tutorial_list);
         schema.Feed.findOne({type: "main"}, function(err, feed){
+            feed.tutorials = [];
+            for (var i = 0; i < tutorial_list.length; i++){
+                feed.tutorials.push(tutorial_list[i]['key']);
+            }
+            feed.save(function (err) {if (err) console.log ('Error. feed cant save')});
+        });
+        //@overall
+        tutorial_list = {};
+        for (var i = 0; i < tutorials.length; i++){
+            var tutorial = tutorials[i];
+            var t2 = Math.abs(new Date() - tutorial.created) / 36e5;
+            var vote_score = tutorial.vote_score;
+            var score = vote_score * ((t2 <= 24 * 7) ? 1 : 0);
+            tutorial_list[tutorial._id] = score;
+        }
+        tutorial_list = voteHelper.sortObject(tutorial_list);
+        if(tutorial_list.length > 10){
+            tutorial_list = tutorial_list.slice(0, 10);
+        }
+        schema.Feed.findOne({type: "overall"}, function(err, feed){
             feed.tutorials = [];
             for (var i = 0; i < tutorial_list.length; i++){
                 feed.tutorials.push(tutorial_list[i]['key']);
