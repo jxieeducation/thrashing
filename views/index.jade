@@ -9,7 +9,24 @@ block meta
 
 block content
     div.container.main
-        img.banner(src="/images/banner.png")
+        div.hidden-xs.row(style="box-shadow: 4px 4px 4px #aaa; margin-left: 0px; margin-right: 0px; margin-bottom: 50px; background: #7fcd7f; border-radius: 8px;")
+            div(style="width: 100%; padding-left: 50px; padding-top: 20px; padding-right: 50px; display: block")
+                h2(style="color: white; margin-bottom: 10px") Thrashing
+                h3(style="color: white; margin-top: 10px; padding: 0px") Learn, Grow, Develop
+                hr(style="margin-bottom: 0px")
+            div(style="height: auto; width: 100%; display: block")
+                div.hidden-xs.col-xs-4(style="height: 100%; padding: 15px; padding-left: 30px; padding-bottom: 30px")
+                    div(style="width: 100%; height: 100%; padding: 20px;")
+                        h3(style="color: white") Learn
+                        p(style="color: white") Learn about new skills and technologies available today by exploring the tutorials on Thrashing.
+                div.hidden-xs.col-xs-4(style="height: 100%; padding: 15px; padding-bottom: 30px")
+                    div(style="width: 100%; height: 100%; padding: 20px;")
+                        h3(style="color: white") Grow
+                        p(style="color: white") Gain more experience as you write projects based on the techniques that you have learned.
+                div.hidden-xs.col-xs-4(style="height: 100%; padding: 15px; padding-right: 30px; padding-bottom: 30px")
+                    div(style="width: 100%; height: 100%; padding: 20px;")
+                        h3(style="color: white") Develop
+                        p(style="color: white") Apply those skills into your job, workplace, and the world. Give back to the community.
         div.left(style="width: 49%")
             h3 Trending Tutorials
             each tutorial in main_tutorials
@@ -18,7 +35,7 @@ block content
                         p.active.bold #{tutorial.name}
                         p #{tutorial.description}
                     hr
-        div.right(style="width: 49%; padding-left: 10px;", class="hidden-xs")
+        div.hidden-xs.right(style="width: 49%; padding-left: 10px;")
             h3 Best Weekly Tutorials
             each tutorial in overall_tutorials
                 a(href="/tutorial/#{tutorial._id}")

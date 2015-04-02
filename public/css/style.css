@@ -230,16 +230,16 @@ textarea.content.short {
     width: 474px !important;
 }
 
-.modal {
+.modal-view {
     width: 100%;
     max-width: 300px;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    text-align: center;
 }
 
 .banner { 
-    width:100%; 
-    margin-bottom:30px; 
-    border-radius: 8px;
+    width:100%;
+    margin-bottom:30px;
 }
 
