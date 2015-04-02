@@ -11,10 +11,12 @@ function generateRelated(){
     			}
     			tutorial.related_tutorials = [];
     			for (var i = 0; i < results['hits'].length; i++){
-    				tutorial.related_tutorials.push(results['hits'][i]['_id']);
-    				if(tutorial.related_tutorials.length > 6){
-    					break;
-    				}
+                    if(results['hits'][i]['_id'].toString() != tutorial._id.toString()){
+                        tutorial.related_tutorials.push(results['hits'][i]['_id']);
+                        if(tutorial.related_tutorials.length > 6){
+                            break;
+                        }
+                    }
     			}
     			tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
 			})
