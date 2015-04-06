@@ -44,12 +44,9 @@ schema.Tutorial.sync(function (err, numSynced) {
 
 //transfers non-www to www
 app.get('/*', function(req, res, next) {
-  if (req.headers.host.match(/^www/) !== null ) {
-    next();
-  } else {
-    res.redirect('http://www.' + req.headers.host + req.url, 301);
-  }
-})
+    if (req.headers.host.match(/^www/) == null ) res.redirect('http://www.' + req.headers.host + req.url, 301);
+    else next();
+});
 
 app.get('/', function (req, res) {
     if (req.user){
