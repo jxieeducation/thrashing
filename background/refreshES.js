@@ -16,6 +16,7 @@ var schema = require('./../schema/schema.js');
 var exec = require('child_process').exec;
 
 function ESUpdate(){
+    console.log("restarting ES");
 	exec('curl -XPOST 0.0.0.0:9200/_shutdown', function (error, stdout, stderr) {
     	if(error){
         	console.log(error); 

@@ -1,6 +1,7 @@
 var schema = require('./../schema/schema.js');
 
 function generateRelated(){
+    console.log("calculating related tutorials");
 	schema.Tutorial.find({}, function(err, tutorials){
 		for (var i = 0; i < tutorials.length; i++){
 			var tutorial = tutorials[i];

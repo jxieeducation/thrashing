@@ -55,7 +55,7 @@ h3 {
 }
 
 p {
-    color: #444;
+/*    color: #444;*/
     font-weight: 300;
 }
 
@@ -152,7 +152,7 @@ input[type="text"].form-control, input[type="password"].form-control {
     margin-right: 10px;
 }
 
-a, .active {
+a{
     color: #7fcd7f;
 }
 
