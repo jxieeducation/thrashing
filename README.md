@@ -19,3 +19,6 @@ beta:
 - alex
 - oliver????
 - florian????
+
+questions that need to be answered:
+- do developers like to 
