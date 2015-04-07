@@ -38,9 +38,9 @@ def feed():
     RunCmd(['node', 'background/feed.js'], 50).Run()
 
 def related_tutorial():
-    RunCmd(['node', 'background/related_tutorial.js'], 50).Run()
+    RunCmd(['node', 'background/related_tutorials.js'], 50).Run()
 
-# note 11:00 UTC is 3:00 in Pacific time 
+# note 11:00 UTC is 3:00 in Pacific time
 # python jobs
 schedule.every().day.at("11:00").do(backupDB)
 schedule.every().day.at("11:35").do(sitemap)
