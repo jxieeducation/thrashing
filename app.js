@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
     schema.Feed.findOne({type:"main"}, function(err, feed){
         schema.Tutorial.find({'_id': { $in:feed.tutorials }}).sort({score_main:-1}).exec(function(err,main_tutorials){
             schema.Feed.findOne({type:"overall"}, function(err, feed){
-                schema.Tutorial.find({'_id': { $in:feed.tutorials }}).sort({score_main:-1}).exec(function(err,overall_tutorials){
+                schema.Tutorial.find({'_id': { $in:feed.tutorials }}).sort({score_overall:-1}).exec(function(err,overall_tutorials){
                     res.render('index.jade', {main_tutorials: main_tutorials, overall_tutorials:overall_tutorials, user: req.user});
                 });
             });
