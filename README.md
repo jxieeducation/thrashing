@@ -3,7 +3,8 @@ crowdsourcing programming tutorials
 
 ####to do:
 * add instructions on how to ctrl + key for markdown editing
-* new generate sitemap functionalities
+* redo feed algo
+
 
 * tags (look at how github is doing it)
 * upload images to s3
@@ -15,6 +16,8 @@ beta:
 - andrew
 - lucas
 - alex
+- victoria
+
 - oliver????
 - florian????
 
@@ -23,6 +26,7 @@ questions that need to be answered:
 - do developers want to write on a site like this
 - writing tutorials: WYSIWYG vs markdown
 - do ppl browse, or read digest email
+- would a meetup email structure work
 - do ppl want to ask other ppl things, like on Quora? 1 q = many tutorials
 - do ppl want to improve others' tutorial page
 - 

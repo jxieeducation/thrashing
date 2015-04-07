@@ -16,6 +16,8 @@ var tutorialSchema = Schema({
 	created: Date,
 	lastChanged: Date,
 	vote_score: Number,
+	score_main: Number,
+	score_overall: Number,
 	votes: [{ ip:String, vote:Boolean }],
 	owner: { type:Schema.ObjectId, ref:"User" },
   	contributors: [{ type:Schema.ObjectId, ref:"User" }],

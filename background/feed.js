@@ -31,6 +31,8 @@ function updateFeed(){
             var t2 = Math.abs(new Date() - tutorial.created) / 36e5;
             var vote_score = tutorial.vote_score;
             var score = vote_score * Math.pow(0.99, t1) + 15 * Math.max(0, (36 - t2) / 36);
+            tutorial.score_main = score;
+            tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
             tutorial_list[tutorial._id] = score;
         }
         tutorial_list = voteHelper.sortObject(tutorial_list);
@@ -51,6 +53,8 @@ function updateFeed(){
             var t2 = Math.abs(new Date() - tutorial.created) / 36e5;
             var vote_score = tutorial.vote_score;
             var score = vote_score * ((t2 <= 24 * 7) ? 1 : 0);
+            tutorial.score_overall = score;
+            tutorial.save(function (err) {if (err) console.log ('Error. tutorial cant save')});
             tutorial_list[tutorial._id] = score;
         }
         tutorial_list = voteHelper.sortObject(tutorial_list);
