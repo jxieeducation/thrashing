@@ -28,7 +28,13 @@ function ESUpdate(){
                     console.log(error); 
                     return;
                 }
-                console.log("restarted ES");
+                schema.Tutorial.sync(function (err, numSynced) {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log('number of tutorials synced:', numSynced);
+                    }
+                });
             });
         }, 5000);
 	});

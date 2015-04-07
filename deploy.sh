@@ -22,7 +22,7 @@ npm i
 # fix mongoose shit: http://stackoverflow.com/questions/28651028/cannot-find-module-build-release-bson-code-module-not-found-js-bson
 
 #python scheduler
-sudo pip install schedule boto creepy
+sudo pip install schedule boto pymongo
 
 # scheduler screen
 screen -S scheduler

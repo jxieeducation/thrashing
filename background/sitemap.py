@@ -1,31 +1,25 @@
-from creepy import Crawler
+from pymongo import MongoClient
+
+c = MongoClient()
+db = c.thrashing
 
 def generate_sitemap():
-    siteurl = ""
-    class SiteCrawler(Crawler):
-        urls = []
-        def process_document(self, doc):
-            if doc.status == 200:
-                if siteurl in doc.url:
-                    self.urls += [doc.url]
-            else:
-                pass
-    def getUrls (url):
-        crawler = SiteCrawler()
-        crawler.set_follow_mode(Crawler.F_SAME_HOST)
-        crawler.add_url_filter('\.(jpg|jpeg|gif|png|js|css|swf)$')
-        siteurl = url
-        crawler.crawl(url)
-        return crawler.urls
+    baseurl = "http://www.thrashing.io/"
+    theUrls = ["http://www.thrashing.io/", "http://www.thrashing.io/signin", "http://www.thrashing.io/signup"]
+    for tutorial in db['tutorials'].find():
+        theUrls += [baseurl + "tutorial/" + str(tutorial['_id'])]
+    for user in db['users'].find():
+        theUrls += [baseurl + "profile/" + str(user['_id'])]
 
     intro = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">\n'
     end = '</urlset>'
     body = ''
-    urls = getUrls("http://www.thrashing.io")
-    for url in urls:
+    print "urls scraped"
+    for url in theUrls:
         body += '<url>\n'
         body += '\t<loc>' + url + '</loc>\n'
         body += '</url>\n'
+    print "xml generated"
     output = intro + body + end
     out = 'public/sitemap.xml'
     f = open(out,'w')

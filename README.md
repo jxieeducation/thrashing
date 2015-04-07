@@ -2,7 +2,9 @@
 crowdsourcing programming tutorials
 
 ####to do:
-* 
+* add instructions on how to ctrl + key for markdown editing
+* new generate sitemap functionalities
+
 * tags (look at how github is doing it)
 * upload images to s3
 * url fix
