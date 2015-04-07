@@ -25,3 +25,4 @@ def generate_sitemap():
     f = open(out,'w')
     f.write(output)
     f.close()
+generate_sitemap()

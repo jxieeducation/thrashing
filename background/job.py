@@ -1,7 +1,5 @@
 #note run this script from the thrashing base directory
 import schedule
-from sitemap import generate_sitemap
-from dbbackup import backup
 import time
 import subprocess as sub
 import threading
@@ -24,6 +22,12 @@ class RunCmd(threading.Thread):
             self.p.terminate()
             self.join()
 
+def backupDB():
+    RunCmd(['python', 'background/dbbackup.py'], 120).Run()
+
+def sitemap():
+    RunCmd(['python', 'background/sitemap.py'], 50).Run()
+
 def refreshES():
     RunCmd(['node', 'background/refreshES.js'], 50).Run()
 
@@ -38,8 +42,8 @@ def related_tutorial():
 
 # note 11:00 UTC is 3:00 in Pacific time 
 # python jobs
-schedule.every().day.at("11:00").do(backup)
-schedule.every().day.at("11:35").do(generate_sitemap)
+schedule.every().day.at("11:00").do(backupDB)
+schedule.every().day.at("11:35").do(sitemap)
 # js jobs
 schedule.every(4).hours.do(refreshES)
 schedule.every().day.at("12:00").do(email)

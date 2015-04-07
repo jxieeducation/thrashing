@@ -32,3 +32,5 @@ def backup():
 	print "uploading " + datetime.datetime.now().strftime("%y/%m/%d/backup.zip")
 	k.key = datetime.datetime.now().strftime("%y/%m/%d/backup.zip")
 	k.set_contents_from_filename(db_file, cb=percent_cb, num_cb=10)
+
+backup()
