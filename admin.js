@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function (req, res) {
     schema.User.find().sort({_id:-1}).exec(function(err, users){
         schema.Tutorial.find().sort({_id:-1}).exec(function(err, tutorials){
-            var output = {num_users: users.length, num_tutorials: tutorials.length, latest_user: users[0], latest_tutorial: tutorials[0]};
+            var output = {num_users: users.length, num_tutorials: tutorials.length, latest_user: "thrashing.io/profile/" + users[0]._id.toString(), latest_tutorial: "thrashing.io/tutorial/" + tutorials[0]._id.toString()};
             res.json(output);
         });
     });
