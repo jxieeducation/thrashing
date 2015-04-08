@@ -2,13 +2,13 @@
 crowdsourcing programming tutorials
 
 ####to do:
-* add instructions on how to ctrl + key for markdown editing
-* redo feed algo
-
+* url fix
+* contact all potential betas
+* monitoring site
+* admin site
 
 * tags (look at how github is doing it)
 * upload images to s3
-* url fix
 
 beta: 
 - adrian
