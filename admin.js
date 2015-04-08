@@ -8,9 +8,9 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    schema.User.find({}, function(err, users){
-        schema.Tutorial.find({}, function(err, tutorials){
-            var output = {num_users: users.length, num_tutorials: tutorials.length};
+    schema.User.find().sort({_id:-1}).exec(function(err, users){
+        schema.Tutorial.find().sort({_id:-1}).exec(function(err, tutorials){
+            var output = {num_users: users.length, num_tutorials: tutorials.length, latest_user: users[0], latest_tutorial: tutorials[0]};
             res.json(output);
         });
     });
