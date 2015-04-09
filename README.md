@@ -3,23 +3,21 @@ crowdsourcing programming tutorials
 
 ####to do:
 * url fix
+* google url auto submit
 * contact all potential betas
 * monitoring site
-* admin site
 
 * tags (look at how github is doing it)
 * upload images to s3
 
 beta: 
-- adrian
 - felix
-- andrew
 - lucas
 - alex
-- victoria
 
-- oliver????
-- florian????
+- adrian
+- andrew
+- victoria
 
 questions that need to be answered:
 - do developers like to read about hacks + tutorials
