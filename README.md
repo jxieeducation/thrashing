@@ -2,6 +2,7 @@
 crowdsourcing programming tutorials
 
 ####to do:
+* fix thrashing digest tutorials order
 * url fix
 * google url auto submit
 * contact all potential betas

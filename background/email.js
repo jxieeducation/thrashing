@@ -32,7 +32,7 @@ function sendUpdateToUser(user, msg){
 function emailJob(){
     console.log("sending daily emails");
     schema.Feed.findOne({type:"main"}, function(err, feed){
-        schema.Tutorial.find({'_id': { $in:feed.tutorials }}, function(err,tutorials){
+        schema.Tutorial.find({'_id': { $in:feed.tutorials }}).sort({score_main:-1}).exec(function(err, tutorials){
             var msg = "Hey, Thrashing daily digest here.\n\n";
             for(var i = 0; i < tutorials.length; i++){
                 var tutorial = tutorials[i];
