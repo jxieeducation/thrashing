@@ -44,9 +44,9 @@ module.exports = (function(){
                 res.status(404).send('Not found');
                 return;
             }
-            schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({last_changed:-1}).exec(function(err,tutorials){
+            schema.Tutorial.find({'_id': { $in:user.contributed_tutorials }}).sort({last_changed: 1}).exec(function(err,sorted_tutorials){
                 context['user_profile'] = user;
-                context['tutorials'] = tutorials;
+                context['tutorials'] = sorted_tutorials;
                 res.render('profile_tutorials.jade', context);
             });
         });
